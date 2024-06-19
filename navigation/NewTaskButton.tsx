@@ -7,7 +7,12 @@ import colors from "../config/colors";
 
 
 
-const NewTaskButton = ({ onPress }) => {
+type NewTaskButtonProps = {
+  onPress: () => void;
+};
+
+
+const NewTaskButton: React.FC<NewTaskButtonProps> = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>

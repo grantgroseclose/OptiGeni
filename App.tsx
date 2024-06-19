@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 
 import { StatusBar } from 'expo-status-bar';
@@ -8,6 +9,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
 
 
+
+
+const queryClient = new QueryClient();
 
 
 export default function App() {
@@ -31,9 +35,11 @@ export default function App() {
 
 
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
 

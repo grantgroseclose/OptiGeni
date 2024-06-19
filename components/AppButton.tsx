@@ -1,14 +1,19 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { screenWidth, screenHeight } from '../config/dimensions';
 
-import colors from '../config/colors'
-
-const screenHeight = Dimensions.get('window').height;
-
+import colors from '../config/colors';
 
 
 
-const AppButton = ({ title, onPress }) => {
+
+type AppButtonProps = {
+    title: string;
+    onPress: () => void;
+};
+
+
+const AppButton: React.FC<AppButtonProps> = ({ title, onPress }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
             <Text style={styles.text}>{title}</Text>

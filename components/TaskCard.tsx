@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { Dimensions, View, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 
 import AppText from "./AppText";
 import colors from "../config/colors";
 import AppIcon from "./AppIcon";
 
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
 
 
 
+type TaskCardProps = {
+    title: string;
+    deadline: number;
+    priority: number;
+    executionTime: number;
+    editable: boolean;
+    onPress: () => void;
+    onDelete: () => void;
+};
 
-const TaskCard = ({title, deadline, priority, executionTime, editable, onPress, onDelete}) => {
+
+const TaskCard: React.FC<TaskCardProps> = ({title, deadline, priority, executionTime, editable, onPress, onDelete}) => {
     const [deleteButtonVisible, setDeleteButtonVisible] = useState(false);
 
     const toggleDeleteButton = () => {
@@ -43,15 +51,15 @@ const TaskCard = ({title, deadline, priority, executionTime, editable, onPress, 
             }}
         >
             <View style={styles.detailsContainer}>
-                <AppText passedStyle={styles.title}>{title}</AppText>
-                <AppText passedStyle={styles.subTitle}>Deadline: {deadline}</AppText>
-                <AppText passedStyle={styles.subTitle}>Priority: {priority}</AppText>
-                <AppText passedStyle={styles.subTitle}>Execution Time: {executionTime}</AppText>
+                <AppText passedStyle={styles.title} text={title} />
+                <AppText passedStyle={styles.subTitle} text={`Deadline: ${deadline}`} />
+                <AppText passedStyle={styles.subTitle} text={`Priority: ${priority}`} />
+                <AppText passedStyle={styles.subTitle} text={`Execution Time: ${executionTime}`} />
             </View>
 
             { deleteButtonVisible &&
                 <TouchableOpacity onPress={handlePress} style={styles.deleteButton}>
-                    <AppIcon name='window-close' iconColor={colors.black} />
+                    {/* <AppIcon name='window-close' iconColor={colors.black} /> */}
                 </TouchableOpacity>
             }
         </TouchableOpacity>
@@ -64,7 +72,7 @@ const TaskCard = ({title, deadline, priority, executionTime, editable, onPress, 
 
 const styles = StyleSheet.create({
     card: {
-        width: screenWidth * 0.85,
+        width: '100%',
         padding: 15,
         borderRadius: 15,
         marginVertical: '5%',

@@ -1,12 +1,18 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import colors from '../config/colors'
 
 
 
 
-const Screen = ({ passedStyle, children }) => {
+type ScreenProps = {
+    passedStyle: StyleProp<ViewStyle>;
+    children: any;
+};
+
+
+const Screen: React.FC<ScreenProps> = ({ passedStyle, children }) => {
     return <SafeAreaView style={[styles.screen, passedStyle]}>{children}</SafeAreaView>
 }
 

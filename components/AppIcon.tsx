@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { FlexAlignType, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import colors from '../config/colors';
@@ -7,7 +7,16 @@ import colors from '../config/colors';
 
 
 
-const AppIcon = ({ name, size = 40, backgroundColor = colors.blue, iconColor = colors.light, align }) => {
+type AppIconProps = {
+    name: any;
+    size: number;
+    backgroundColor: string;
+    iconColor: string;
+    align: FlexAlignType;
+};
+
+
+const AppIcon: React.FC<AppIconProps> = ({ name, size = 40, backgroundColor = colors.blue, iconColor = colors.light, align }) => {
     return (
         <View style={{
             width: size,

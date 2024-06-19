@@ -13,12 +13,25 @@ import TaskEditScreen from "../screens/TaskEditScreen";
 
 import NewTaskButton from "./NewTaskButton";
 
-const Tab = createBottomTabNavigator();
 
 
 
+export type RootTabParamList = {
+  Home: undefined;
+  Calendar: undefined;
+  TaskEdit: undefined;
+  List: undefined;
+  Account: undefined;
+};
 
-const AppNavigator = () => (
+const Tab = createBottomTabNavigator<RootTabParamList>();
+
+type AppNavigatorProps = {
+
+};
+
+
+const AppNavigator: React.FC<AppNavigatorProps> = () => (
     <Tab.Navigator screenOptions={{ 
         headerShown: false,
         tabBarStyle: { 
