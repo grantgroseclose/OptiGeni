@@ -6,7 +6,7 @@ import { RootTabParamList } from '../navigation/AppNavigator';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import Screen from "../components/Screen";
-import useAddTask from "../hooks/useAddTask";
+import useAddTask from "../hooks/mutations/useAddTask";
 import FormInputField from "../components/forms/FormInputField";
 import FormSubmitButton from "../components/forms/FormSubmitButton";
 
