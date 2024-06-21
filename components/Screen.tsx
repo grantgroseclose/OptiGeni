@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { SafeAreaView, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
 import colors from '../config/colors'
@@ -8,7 +8,7 @@ import colors from '../config/colors'
 
 type ScreenProps = {
     passedStyle: StyleProp<ViewStyle>;
-    children: any;
+    children: ReactNode;
 };
 
 
