@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldPath, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RootTabParamList } from '../navigation/AppNavigator';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
@@ -23,6 +23,7 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
     const methods = useForm<AddTaskFormSubmissionData>({
         resolver: zodResolver(validationSchema)
     });
+    const AddTaskInputField = FormInputField<AddTaskFormSubmissionData, FieldPath<AddTaskFormSubmissionData>>();
 
     // const addTask = useAddTask(() => {});
     const addTask: SubmitHandler<AddTaskFormSubmissionData> = (data: AddTaskFormSubmissionData) => console.log(data);
@@ -30,24 +31,24 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
     return (
         <Screen passedStyle={styles.container}>
             <AppForm methods={methods}>
-                <FormInputField
+                <AddTaskInputField
                     name='title'
                     control={methods.control}
                     icon='pencil'
                 />
-                <FormInputField 
+                <AddTaskInputField
                     name='deadline'
                     control={methods.control}
                     icon='alarm'
                     keyboardType="numeric"
                 />
-                <FormInputField 
+                <AddTaskInputField
                     name='priority'
                     control={methods.control}
                     icon='alert-circle-check-outline'
                     keyboardType="numeric"
                 />
-                <FormInputField 
+                <AddTaskInputField
                     name='executionTime'
                     control={methods.control}
                     icon='timer-sand'

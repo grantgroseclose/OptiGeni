@@ -1,25 +1,24 @@
 import React from "react";
 import { useController, FieldValues, FieldPath } from 'react-hook-form';
-import InputProps from "../../types/InputProps";
 import FormInputFieldProps from "../../types/FormInputFieldProps";
 import AppTextInput from "../AppTextInput";
 
 
 
 
-
-const FormInputField = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>({
-  name,
-  rules,
-  control,
-  icon,
-  keyboardType,
-  ...rest
-}: FormInputFieldProps<TFieldValues, TName> & InputProps) => {
-    const { field, fieldState, formState } = useController({
+// Define the component using JSX with generics
+const FormInputFieldElement = <TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>>({
+    name,
+    rules,
+    control,
+    icon,
+    keyboardType,
+    ...rest
+}: FormInputFieldProps<TFieldValues, TName>) => {
+    const { field } = useController<TFieldValues, TName>({
         name,
         control,
-        rules: { required: true }
+        rules
     });
 
     return (
@@ -31,11 +30,16 @@ const FormInputField = <TFieldValues extends FieldValues = FieldValues, TName ex
             onChangeText={field.onChange}
             placeholder={name}
             keyboardType={keyboardType}
+            {...rest}
         />
     );
-}
+};
 
-
+// Define a higher-order component that wraps FormInputFieldElement and maintains generics
+const FormInputField = <TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>>() => {
+    const WrappedFormInputField: React.FC<FormInputFieldProps<TFieldValues, TName>> = (props) => <FormInputFieldElement {...props} />;
+    return WrappedFormInputField;
+};
 
 
 
