@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { FieldPath, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RootTabParamList } from '../navigation/AppNavigator';
@@ -25,8 +25,9 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
     });
     const AddTaskInputField = FormInputField<AddTaskFormSubmissionData, FieldPath<AddTaskFormSubmissionData>>();
 
-    // const addTask = useAddTask(() => {});
-    const addTask: SubmitHandler<AddTaskFormSubmissionData> = (data: AddTaskFormSubmissionData) => console.log(data);
+    const addTask = useAddTask(() => {Alert.alert('Success', 'Task has been added!')});
+    const addTaskOnSubmit: SubmitHandler<AddTaskFormSubmissionData> = (data: AddTaskFormSubmissionData) => addTask.mutate(data);
+    
 
     return (
         <Screen passedStyle={styles.container}>
@@ -56,7 +57,7 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
                 />
                 <FormSubmitButton
                     title='Submit'
-                    onSubmit={addTask}
+                    onSubmit={addTaskOnSubmit}
                 />
             </AppForm>
         </Screen>
