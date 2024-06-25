@@ -1,7 +1,6 @@
 import React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { FieldPath, SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldPath, SubmitHandler } from "react-hook-form";
 import { RootTabParamList } from '../navigation/AppNavigator';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
@@ -11,7 +10,7 @@ import FormInputField from "../components/forms/FormInputField";
 import FormSubmitButton from "../components/forms/FormSubmitButton";
 
 import { validationSchema, AddTaskFormSubmissionData } from "../types/AddTaskData";
-import AppForm from "../components/forms/AppForm";
+import AppFormFC from "../components/forms/AppForm";
 
 
 
@@ -20,9 +19,7 @@ type TaskEditScreenProps = BottomTabScreenProps<RootTabParamList, 'TaskEdit'>;
 
 
 const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
-    const methods = useForm<AddTaskFormSubmissionData>({
-        resolver: zodResolver(validationSchema)
-    });
+    const AppForm = AppFormFC<AddTaskFormSubmissionData, typeof validationSchema>();
     const AddTaskInputField = FormInputField<AddTaskFormSubmissionData, FieldPath<AddTaskFormSubmissionData>>();
 
     const addTask = useAddTask(() => {Alert.alert('Success', 'Task has been added!')});
@@ -31,27 +28,23 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
 
     return (
         <Screen passedStyle={styles.container}>
-            <AppForm methods={methods}>
+            <AppForm schema={validationSchema}>
                 <AddTaskInputField
                     name='title'
-                    control={methods.control}
                     icon='pencil'
                 />
                 <AddTaskInputField
                     name='deadline'
-                    control={methods.control}
                     icon='alarm'
                     keyboardType="numeric"
                 />
                 <AddTaskInputField
                     name='priority'
-                    control={methods.control}
                     icon='alert-circle-check-outline'
                     keyboardType="numeric"
                 />
                 <AddTaskInputField
                     name='executionTime'
-                    control={methods.control}
                     icon='timer-sand'
                     keyboardType="numeric"
                 />

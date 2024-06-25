@@ -1,17 +1,22 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { View } from 'react-native';
-import { FormProvider, UseFormReturn } from "react-hook-form";
-import { AddTaskFormSubmissionData } from "../../types/AddTaskData";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ZodObject, ZodRawShape } from "zod";
+import AppFormProps from "../../types/AppFormProps";
 
 
 
 
-type AppFormProps = {
-    methods: UseFormReturn<AddTaskFormSubmissionData>;
-    children: ReactNode;
-};
+const AppFormElement = <TFieldValues extends FieldValues, TValidationSchema extends ZodObject<ZodRawShape>>({
+    schema,
+    children
+}: AppFormProps<TFieldValues, TValidationSchema>) => {
+    const methods = useForm<TFieldValues>({
+        resolver: zodResolver(schema),
+        mode: "onChange"
+    });
 
-const AppForm: React.FC<AppFormProps> = ({methods, children}) => {
     return (
         <FormProvider {...methods}>
             <View style={{width: '92.5%', alignSelf: 'center'}}>
@@ -19,7 +24,21 @@ const AppForm: React.FC<AppFormProps> = ({methods, children}) => {
             </View>
         </FormProvider>
     );
-}
+};
+
+
+const AppForm = <TFieldValues extends FieldValues, TValidationSchema extends ZodObject<ZodRawShape>>() => {
+    const WrappedAppFormElement: React.FC<AppFormProps<TFieldValues, TValidationSchema>> = (props) => <AppFormElement {...props} />;
+    return WrappedAppFormElement;
+};
+
+
+
+
+
+
+
+
 
 
 export default AppForm;
