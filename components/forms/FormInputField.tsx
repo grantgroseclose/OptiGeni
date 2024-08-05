@@ -1,5 +1,6 @@
 import React from "react";
-import { useController, FieldValues, FieldPath, useFormContext } from 'react-hook-form';
+import { useFormikContext, useField } from 'formik';
+
 import FormInputFieldProps from "../../types/FormInputFieldProps";
 import AppTextInput from "../AppTextInput";
 import ErrorMessage from "./validation/ErrorMessage";
@@ -7,44 +8,30 @@ import ErrorMessage from "./validation/ErrorMessage";
 
 
 
-const FormInputFieldElement = <TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>>({
-    name,
-    rules,
+const FormInputField: React.FC<FormInputFieldProps> = ({
     icon,
     keyboardType,
-    ...rest
-}: FormInputFieldProps<TFieldValues, TName>) => {
-    const { control } = useFormContext<TFieldValues>();
-    const { field, fieldState: { error } } = useController<TFieldValues, TName>({
-        name,
-        control,
-        rules
-    });
-
-    console.log(field.name + ': ' + error?.message as string);
+    ...otherProps
+}) => {
+    const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
+    const [field, meta, helpers] = useField(otherProps);
 
     return (
         <>
             <AppTextInput
-                {...field}
-                value={field.value}
-                icon={icon}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                placeholder={name}
-                keyboardType={keyboardType}
-                {...rest}
+            onBlur={() => setFieldTouched(field.name)}
+            onChangeText={handleChange(field.name)}
+            keyboardType={keyboardType}
+            placeholder={field.name}
+            // editable={otherProps['editable']}
+            placeholderTextColor={'gray'}
+            icon={icon}
+            {...otherProps}
             />
-            <ErrorMessage error={error?.message as string}/>
+            { meta.touched && <ErrorMessage error={JSON.stringify(meta.error) as string} visible={meta.touched as boolean} /> }
         </>
     );
-};
-
-
-const FormInputField = <TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>>() => {
-    const WrappedFormInputField: React.FC<FormInputFieldProps<TFieldValues, TName>> = (props) => <FormInputFieldElement {...props} />;
-    return WrappedFormInputField;
-};
+}
 
 
 

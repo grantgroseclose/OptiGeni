@@ -7,7 +7,7 @@ import colors from '../config/colors';
 
 
 
-type AppButtonProps = {
+type AppButtonProps= {
     title: string;
     onPress: () => void;
 };

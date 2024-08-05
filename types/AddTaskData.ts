@@ -1,24 +1,15 @@
-import { FieldValues } from 'react-hook-form';
-import { z } from 'zod';
+import * as Yup from 'yup';
 
 
-const validationSchema = z.object({
-    title: z.string().min(1),
-    deadline: z.preprocess(
-        (a) => parseInt(z.string().parse(a), 10),
-        z.number().positive().min(1)
-    ),
-    priority: z.preprocess(
-        (a) => parseInt(z.string().parse(a), 10),
-        z.number().positive().min(1)
-    ),
-    executionTime: z.preprocess(
-        (a) => parseInt(z.string().parse(a), 10),
-        z.number().positive().min(1)
-    )
+
+const validationSchema = Yup.object({
+    title: Yup.string().min(1, {message: 'Title is required'}).required(),
+    deadline: Yup.number().min(1, {message: 'Deadline is required'}).required(),
+    priority: Yup.number().min(1, {message: 'Priority is required'}).required(),
+    executionTime: Yup.number().min(1, {message: 'Execution time is required'}).required(),
 });
   
-type AddTaskFormSubmissionData = z.infer<typeof validationSchema> & FieldValues;
+type AddTaskFormSubmissionData = Yup.InferType<typeof validationSchema>;
 
 
 

@@ -1,11 +1,15 @@
 import { ReactNode } from "react";
-import { FieldValues, UseFormProps } from "react-hook-form";
-import { ZodObject, ZodRawShape } from "zod";
+import { FormikValues, FormikErrors } from "formik";
+import * as Yup from 'yup';
 
 
-type AppFormProps<TFieldValues extends FieldValues, TValidationSchema extends ZodObject<ZodRawShape>> = UseFormProps<TFieldValues> & {
-    schema: TValidationSchema;
-    children: ReactNode;
+type AppFormProps<TFieldValues extends FormikValues> = {
+    initialValues: TFieldValues;
+    validationSchema: Yup.ObjectSchema<TFieldValues>;
+    onSubmit: (values: TFieldValues) => void;
+    style: Object;
+    errors?: FormikErrors<TFieldValues>;
+    children?: ReactNode;
 };
 
 

@@ -1,22 +1,31 @@
 import React from "react";
-import { useFormContext, SubmitHandler } from 'react-hook-form';
-import { AddTaskFormSubmissionData } from "../../types/AddTaskData";
+import { FormikValues, useFormikContext } from "formik";
+
 import AppButton from "../AppButton";
 
 
 
-
-type FormSubmitButtonProps = {
+type FormSubmitButtonProps =  {
     title: string;
-    onSubmit: SubmitHandler<AddTaskFormSubmissionData>;
 };
 
 
-const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({ title, onSubmit }) => {
-    const { handleSubmit } = useFormContext<AddTaskFormSubmissionData>();
+const FormSubmitButtonElement = <TFieldValues extends FormikValues>({
+    title
+}: FormSubmitButtonProps) => {
+    const { handleSubmit } = useFormikContext<TFieldValues>();
 
-    return <AppButton title={title} onPress={handleSubmit(onSubmit)} />;
-}
+    return <AppButton title={title} onPress={handleSubmit} />;
+};
+
+
+const FormSubmitButton = <TFieldValues extends FormikValues>() => {
+    const WrappedAppFormElement: React.FC<FormSubmitButtonProps> = (props) => <FormSubmitButtonElement {...props} />;
+    return WrappedAppFormElement;
+};
+
+
+
 
 
 

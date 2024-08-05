@@ -6,7 +6,8 @@ import AppText from "../../AppText";
 
 
 type ErorrMessageProps = {
-    error: string;
+    error: string | undefined;
+    visible: boolean | undefined;
 };
 
 const ErrorMessage: React.FC<ErorrMessageProps> = ({error}) => {
