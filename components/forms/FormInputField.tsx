@@ -11,6 +11,7 @@ import ErrorMessage from "./validation/ErrorMessage";
 const FormInputField: React.FC<FormInputFieldProps> = ({
     icon,
     keyboardType,
+    secureTextEntry,
     ...otherProps
 }) => {
     const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
@@ -26,9 +27,10 @@ const FormInputField: React.FC<FormInputFieldProps> = ({
             // editable={otherProps['editable']}
             placeholderTextColor={'gray'}
             icon={icon}
+            secureTextEntry={secureTextEntry}
             {...otherProps}
             />
-            { meta.touched && <ErrorMessage error={JSON.stringify(meta.error) as string} visible={meta.touched as boolean} /> }
+            { meta.touched && <ErrorMessage error={meta.error as string} visible={meta.touched as boolean} /> }
         </>
     );
 }

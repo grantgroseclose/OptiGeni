@@ -1,17 +1,14 @@
 import APIClient from "./APIClient";
 
-export interface Task {
+export type Task = {
     title: string;
     deadline: number;
     priority: number;
     executionTime: number;
-}
-
-export type TaskProps = {
-    task: Task;
-}
+};
 
 
 
 
-export default new APIClient<Task>('/tasks');
+export default new APIClient<Task, Task>('/tasks');
+

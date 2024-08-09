@@ -7,7 +7,7 @@ import Screen from "../components/Screen";
 import useAddTask from "../hooks/mutations/useAddTask";
 import FormInputField from "../components/forms/FormInputField";
 
-import { validationSchema, AddTaskFormSubmissionData } from "../types/AddTaskData";
+import { validationSchema, AddTaskData } from "../types/AddTaskData";
 import AppFormFC from "../components/forms/AppForm";
 import AddTaskButtonFC from "../components/forms/FormSubmitButton";
 
@@ -18,11 +18,11 @@ type TaskEditScreenProps = BottomTabScreenProps<RootTabParamList, 'TaskEdit'>;
 
 
 const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
-    const AddTaskForm = AppFormFC<AddTaskFormSubmissionData>();
-    const AddTaskButton = AddTaskButtonFC<AddTaskFormSubmissionData>();
+    const AddTaskForm = AppFormFC<AddTaskData>();
+    const AddTaskButton = AddTaskButtonFC<AddTaskData>();
 
     const addTask = useAddTask(() => {Alert.alert('Success', 'Task has been added!')});
-    const addTaskOnSubmit = (data: AddTaskFormSubmissionData) => addTask.mutate(data);
+    const addTaskOnSubmit = (data: AddTaskData) => addTask.mutate(data);
     
 
     return (

@@ -9,6 +9,7 @@ type FormInputFieldProps = {
     id?: string;
     icon?: React.ReactNode;
     keyboardType?: KeyboardTypeOptions | undefined;
+    secureTextEntry?: boolean;
 };
 
 

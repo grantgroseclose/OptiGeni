@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 import { RootTabParamList } from '../navigation/AppNavigator';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-import colors from '../config/colors';
 import Screen from '../components/Screen';
-import AppText from '../components/AppText';
+import AppButton from '../components/AppButton';
+import { useAuthStore } from '../store/auth';
 
 
 
@@ -14,9 +14,15 @@ type AccountScreenProps = BottomTabScreenProps<RootTabParamList, 'Account'>;
 
 
 const AccountScreen: React.FC<AccountScreenProps> = ({navigation}) => {
+    const logoutUser = useAuthStore((state) => state.logout);
+
+    const logoutUserOnSubmit = () => {
+        logoutUser();
+    }
+
     return (
         <Screen passedStyle={styles.container}>
-            <AppText passedStyle={{fontSize: 72}} text='ACCOUNT DETAILS'/>
+            <AppButton title={'Logout'} onPress={logoutUserOnSubmit} />
         </Screen>
     );
 }

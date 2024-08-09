@@ -7,6 +7,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 import AppNavigator from './navigation/AppNavigator';
+import AuthNavigator from './navigation/AuthNavigator';
+
+import { useAuthStore } from './store/auth';
 
 
 
@@ -15,6 +18,8 @@ const queryClient = new QueryClient();
 
 
 export default function App() {
+  const isAuth = useAuthStore((state) => state.isAuth);
+
   const [fontsLoaded] = useFonts({
     'Inter-Black': require('./assets/fonts/Inter-Black.ttf'),
     'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
@@ -37,7 +42,8 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <AppNavigator />
+        {/* <AuthNavigator /> */}
+        { isAuth ? <AppNavigator /> : <AuthNavigator /> }
       </NavigationContainer>
     </QueryClientProvider>
   );
