@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { RootStackParamList } from '../navigation/AuthNavigator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -10,6 +10,7 @@ import AppFormFC from "../components/forms/AppForm";
 import RegisterUserButtonFC from "../components/forms/FormSubmitButton";
 
 import { NewUserData, validationSchema } from '../types/NewUserData';
+import { RegisterService } from '../services/AuthService';
 
 
 
@@ -23,8 +24,18 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
     const RegisterUserForm = AppFormFC<NewUserData>();
     const RegisterUserButton = RegisterUserButtonFC<NewUserData>();
 
-
-    const registerUserOnSubmit = (data: NewUserData) => console.log('register functionality');
+    const registerUserOnSubmit = async (data: NewUserData) => {
+        const res = await RegisterService.post(data);
+        
+        if (typeof res === 'object') {
+            if ('error' in res) {
+                return Alert.alert('Error', res.error);
+            }
+            Alert.alert('Success!', 'Registration successful.', [
+                { text: "Ok", onPress: () => navigation.navigate('Start') },
+            ]);
+        }
+    };
     
 
     return (

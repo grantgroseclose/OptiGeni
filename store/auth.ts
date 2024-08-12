@@ -1,9 +1,10 @@
-import { create, createStore } from "zustand";
+import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { RegisterService, LoginService } from "../services/AuthService";
+import { LoginService } from "../services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ExistingUserData } from "../types/ExistingUserData";
+import { TApiResponse } from "../types/ApiResponse";
 
 
 
@@ -11,7 +12,8 @@ import { ExistingUserData } from "../types/ExistingUserData";
 interface AuthStore {
     token: string;
     isAuth: boolean;
-    login: (data: ExistingUserData) => void;
+    error: string;
+    login: (data: ExistingUserData) => Promise<TApiResponse<string> | void>;
     logout: () => void;
 }
 
@@ -21,23 +23,29 @@ export const useAuthStore = create(
         (set) => ({
             token: "",
             isAuth: false,
+            error: "",
             login: async (data) => {
-                try {
-                    const res = await LoginService.post(data);
+                const res = await LoginService.post(data);
 
-                    if (typeof res === 'string') {
-                        set((state) => ({ 
-                            token: res,
-                            isAuth: !!res
-                        }));
-                    } else {
-                        throw new Error('Unexpected response type');
-                    }
-                } catch (error) {
-                    console.log(error);
+                if (typeof res === 'object' && 'error' in res) {
+                    set((state) => ({ 
+                        token: "",
+                        isAuth: !res.error,
+                        error: res.error
+                    }));
+
+                    return res;
+                } else if (typeof res === 'string') {
+                    set((state) => ({ 
+                        token: res,
+                        isAuth: !!res,
+                        error: ""
+                    }));
                 }
+
+                return;
             },
-            logout: () => set((state) => ({ token: "", isAuth: false }))
+            logout: () => set((state) => ({ token: "", isAuth: false, error: "" }))
         }),
         { name: 'auth-store', storage: createJSONStorage(() => AsyncStorage) }
     )

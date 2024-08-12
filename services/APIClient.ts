@@ -1,51 +1,55 @@
-import axios, { AxiosResponse } from 'axios';
+import { create, ApiResponse } from 'apisauce';
+import { TApiResponse } from '../types/ApiResponse';
 
 
 
 
-export const axiosInstance = axios.create({
+const api = create({
     baseURL: 'http://10.0.0.29:3000/api',
-    // withCredentials: true
+    headers: {
+      'Accept': 'application/json',
+    },
 });
 
 
-// axiosInstance.interceptors.request.use((config) => {
-//     const token = useAuthStore.getState().token;
-//     config.headers.Authorization = `Bearer ${token}`;
-//     return config;
-// });
-
-
-class APIClient<ReqT, ResT> {
+class APIClient<TReq, TRes> {
     endpoint: string;
 
     constructor(endpoint: string) {
         this.endpoint = endpoint;
     }
 
-    get = async () => {
-        return axiosInstance
-            .get<ReqT>(this.endpoint)
-            .then((res) => res.data);
-    }
+    getAll = async (): Promise<TRes[]> => {
+        const res = await api.get<TRes[]>(this.endpoint);
 
-    getAll = async () => {
-        return axiosInstance
-            .get<ReqT[]>(this.endpoint)
-            .then((res) => res.data);
-    }
+        return this.handleResponse(res) as TRes[];
+    };
 
-    post = async (data: ReqT): Promise<ResT> => {
-        return axiosInstance
-            .post<ReqT, AxiosResponse<ResT>>(this.endpoint, data)
-            .then(res => res.data);
-    }
+    get = async (): Promise<TRes> => {
+        const res = await api.get<TRes>(this.endpoint);
 
-    delete = async (id: string) => {
-        return axiosInstance
-            .delete<ReqT>(`${this.endpoint}/delete/${id}`)
-            .then(res => res.data);
-    }
+        return this.handleResponse(res) as TRes;
+    };
+
+    post = async (data: TReq): Promise<TRes> => {
+        const res = await api.post<TRes>(this.endpoint, data);
+
+        return this.handleResponse(res) as TRes;
+    };
+
+    delete = async (): Promise<void> => {
+        await api.delete<TRes>(this.endpoint);
+
+        return;
+    };
+
+    private handleResponse = (res: ApiResponse<TRes | TRes[]>): TApiResponse<TRes> => {
+        if (res.data && typeof res.data === 'object' && 'error' in res.data && res.data.error !== "") {
+            return { error: res.data.error as string } as TApiResponse<TRes>;
+        }
+
+        return res.data as TApiResponse<TRes>;
+    };
 }
 
 

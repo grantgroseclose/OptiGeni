@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { RootStackParamList } from '../navigation/AuthNavigator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -24,8 +24,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
     const LoginUserForm = AppFormFC<ExistingUserData>();
     const LoginUserButton = LoginUserButtonFC<ExistingUserData>();
 
-    const loginUserOnSubmit = (data: ExistingUserData) => {
-        loginUser(data);
+    const loginUserOnSubmit = async (data: ExistingUserData) => {
+        const res = await loginUser(data);
+
+        if (typeof res === 'object' && 'error' in res) {
+            Alert.alert('Error', res.error);
+        }
     }
     
 
