@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { CACHE_KEY_TASKS } from '../constants';
-import TaskService, { Task } from "../services/TaskService";
+import { Task, useTaskService } from '../services/TaskService';
 
 
 const useTasks = () => {
+    const TaskService = useTaskService();
+
     return useQuery<Task[], Error>({
         queryKey: CACHE_KEY_TASKS,
         queryFn: TaskService.getAll,

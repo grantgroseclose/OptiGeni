@@ -10,7 +10,7 @@ import AppFormFC from "../components/forms/AppForm";
 import RegisterUserButtonFC from "../components/forms/FormSubmitButton";
 
 import { NewUserData, validationSchema } from '../types/NewUserData';
-import { RegisterService } from '../services/AuthService';
+import { useRegisterService } from '../services/AuthService';
 
 
 
@@ -21,6 +21,8 @@ type RegisterScreenProps = NativeStackScreenProps<RootStackParamList, 'Register'
 
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
+    const RegisterService = useRegisterService();
+
     const RegisterUserForm = AppFormFC<NewUserData>();
     const RegisterUserButton = RegisterUserButtonFC<NewUserData>();
 
@@ -28,7 +30,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
         const res = await RegisterService.post(data);
         
         if (typeof res === 'object') {
-            if ('error' in res) {
+            if ('error' in res && res.error !== "") {
                 return Alert.alert('Error', res.error);
             }
             Alert.alert('Success!', 'Registration successful.', [

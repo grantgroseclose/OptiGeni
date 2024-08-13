@@ -5,7 +5,10 @@ import APIClient from "./APIClient";
 
 
 
+export const useRegisterService = (): APIClient<NewUserData, TApiResponse<NewUserData>> => {
+    return new APIClient<NewUserData, TApiResponse<NewUserData>>('/auth/register');
+};
 
-export const RegisterService = new APIClient<NewUserData, TApiResponse<NewUserData>>('/auth/register');
-export const LoginService = new APIClient<ExistingUserData, TApiResponse<string>>('/auth/login');
-
+export const useLoginService = (): APIClient<ExistingUserData, TApiResponse<string>> => {
+    return new APIClient<ExistingUserData, TApiResponse<string>>('/auth/login');
+};

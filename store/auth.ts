@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { LoginService } from "../services/AuthService";
+import { useLoginService } from "../services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ExistingUserData } from "../types/ExistingUserData";
 import { TApiResponse } from "../types/ApiResponse";
@@ -25,6 +25,7 @@ export const useAuthStore = create(
             isAuth: false,
             error: "",
             login: async (data) => {
+                const LoginService = useLoginService();
                 const res = await LoginService.post(data);
 
                 if (typeof res === 'object' && 'error' in res) {
