@@ -10,6 +10,9 @@ import FormInputField from "../components/forms/FormInputField";
 import { validationSchema, AddTaskData } from "../types/AddTaskData";
 import AppFormFC from "../components/forms/AppForm";
 import AddTaskButtonFC from "../components/forms/FormSubmitButton";
+import FormDropdownPickerFC from "../components/DropdownInput";
+import { Category } from "../services/CategoryService";
+import useCategories from "../hooks/useCategories";
 
 
 
@@ -20,6 +23,9 @@ type TaskEditScreenProps = BottomTabScreenProps<RootTabParamList, 'TaskEdit'>;
 const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
     const AddTaskForm = AppFormFC<AddTaskData>();
     const AddTaskButton = AddTaskButtonFC<AddTaskData>();
+    const FormDropdownPicker = FormDropdownPickerFC<Category>();
+
+    const { data, error, isLoading } = useCategories();
 
     const addTask = useAddTask(() => {Alert.alert('Success', 'Task has been added!')});
     const addTaskOnSubmit = (data: AddTaskData) => addTask.mutate(data);
@@ -33,7 +39,8 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
                         title: '',
                         priority: 0,
                         deadline: 0,
-                        executionTime: 0
+                        executionTime: 0,
+                        category: ''
                     }}
                     validationSchema={validationSchema}
                     style={{}}
@@ -57,6 +64,10 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
                         name='executionTime'
                         icon='timer-sand'
                         keyboardType="numeric"
+                    />
+                    <FormDropdownPicker 
+                        name='category'
+                        data={data}
                     />
                     <AddTaskButton
                         title='Submit'
