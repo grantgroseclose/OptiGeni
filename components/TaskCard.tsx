@@ -9,7 +9,9 @@ import AppIcon from "./AppIcon";
 
 
 type TaskCardProps = {
+    category_color: () => string;
     title: string;
+    description: string;
     deadline: number;
     priority: number;
     executionTime: number;
@@ -19,7 +21,7 @@ type TaskCardProps = {
 };
 
 
-const TaskCard: React.FC<TaskCardProps> = ({title, deadline, priority, executionTime, editable, onPress, onDelete}) => {
+const TaskCard: React.FC<TaskCardProps> = ({category_color, title, description, deadline, priority, executionTime, editable, onPress, onDelete}) => {
     const [deleteButtonVisible, setDeleteButtonVisible] = useState(false);
 
     const toggleDeleteButton = () => {
@@ -50,11 +52,12 @@ const TaskCard: React.FC<TaskCardProps> = ({title, deadline, priority, execution
                 if (editable) toggleDeleteButton();
             }}
         >
-            <View style={styles.detailsContainer}>
+            <View style={[styles.detailsContainer, {borderLeftColor: category_color()}]}>
                 <AppText passedStyle={styles.title} text={title} />
-                <AppText passedStyle={styles.subTitle} text={`Deadline: ${deadline}`} />
-                <AppText passedStyle={styles.subTitle} text={`Priority: ${priority}`} />
-                <AppText passedStyle={styles.subTitle} text={`Execution Time: ${executionTime}`} />
+                {/* <AppText passedStyle={styles.subTitle} text={description} /> */}
+                <AppText passedStyle={styles.subTitle} text={`Due in ${deadline} days`} />
+                {/* <AppText passedStyle={styles.subTitle} text={`Priority: ${priority}`} />
+                <AppText passedStyle={styles.subTitle} text={`Execution Time: ${executionTime}`} /> */}
             </View>
 
             { deleteButtonVisible &&
@@ -76,12 +79,11 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 15,
         marginVertical: '5%',
-        backgroundColor: colors.O8DP,
+        backgroundColor: colors.O4DP,
     },
     detailsContainer: {
         justifyContent: 'center',
         borderLeftWidth: 5,
-        borderLeftColor: colors.pink_dark,
         paddingLeft: 10
     },
     subTitle: {
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
         color: colors.mild
     },
     title: {
-        fontFamily: 'Inter-Bold',
+        fontFamily: 'Inter-Medium',
         color: colors.light,
     },
     deleteButton: {

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CACHE_KEY_TASKS } from '../constants';
-import { Task, useTaskService } from '../services/TaskService';
+import { Task } from '../types/data/Task';
+import { useTaskService } from '../services/TaskService';
 
 
 const useTasks = () => {

@@ -6,10 +6,10 @@ import { Dropdown } from "react-native-element-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useField, useFormikContext } from "formik";
 import { UseQueryResult } from "@tanstack/react-query";
-import FormInputFieldProps from "../types/FormInputFieldProps";
-import { Category } from "../services/CategoryService";
+import FormInputFieldProps from "../../types/form/FormInputFieldProps";
+import { Category } from "../../services/CategoryService";
 
-import colors from "../config/colors";
+import colors from "../../config/colors";
 
 
 

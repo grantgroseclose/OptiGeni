@@ -14,7 +14,7 @@ type NewTaskButtonProps = {
 
 const NewTaskButton: React.FC<NewTaskButtonProps> = ({ onPress }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} style={{alignSelf: 'center'}}>
       <View style={styles.container}>
         <MaterialCommunityIcons
           name="plus-circle"
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     bottom: 20,
     height: 80,
     justifyContent: "center",
+    alignSelf: 'center',
     width: 80,
   },
 });

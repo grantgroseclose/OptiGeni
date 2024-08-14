@@ -8,8 +8,8 @@ const validationSchema = Yup.object({
     firstname: Yup.string().min(1, 'First name must have at least 1 character').required('First name is required')
 });
   
-type NewUserData = Yup.InferType<typeof validationSchema>;
+type NewUser = Yup.InferType<typeof validationSchema>;
 
 
 
-export { validationSchema, NewUserData };
+export { validationSchema, NewUser };

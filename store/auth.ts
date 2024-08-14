@@ -3,8 +3,8 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 import { useLoginService } from "../services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ExistingUserData } from "../types/ExistingUserData";
-import { TApiResponse } from "../types/ApiResponse";
+import { ExistingUser } from "../types/data/ExistingUser";
+import { TApiResponse } from "../types/api/ApiResponse";
 
 
 
@@ -13,7 +13,7 @@ interface AuthStore {
     token: string;
     isAuth: boolean;
     error: string;
-    login: (data: ExistingUserData) => Promise<TApiResponse<string> | void>;
+    login: (data: ExistingUser) => Promise<TApiResponse<string> | void>;
     logout: () => void;
 }
 

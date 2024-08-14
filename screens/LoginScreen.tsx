@@ -5,11 +5,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import Screen from '../components/Screen';
 
-import FormInputField from "../components/forms/FormInputField";
-import AppFormFC from "../components/forms/AppForm";
-import LoginUserButtonFC from "../components/forms/FormSubmitButton";
+import FormInputField from "../components/form/FormInputField";
+import AppFormFC from "../components/form/AppForm";
+import LoginUserButtonFC from "../components/form/FormSubmitButton";
 
-import { ExistingUserData, validationSchema } from '../types/ExistingUserData';
+import { ExistingUser, validationSchema } from '../types/data/ExistingUser';
 import { useAuthStore } from '../store/auth';
 
 
@@ -21,10 +21,10 @@ type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
 const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
     const loginUser = useAuthStore((state) => state.login);
 
-    const LoginUserForm = AppFormFC<ExistingUserData>();
-    const LoginUserButton = LoginUserButtonFC<ExistingUserData>();
+    const LoginUserForm = AppFormFC<ExistingUser>();
+    const LoginUserButton = LoginUserButtonFC<ExistingUser>();
 
-    const loginUserOnSubmit = async (data: ExistingUserData) => {
+    const loginUserOnSubmit = async (data: ExistingUser) => {
         const res = await loginUser(data);
 
         if (typeof res === 'object' && 'error' in res) {

@@ -5,11 +5,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import Screen from '../components/Screen';
 
-import FormInputField from "../components/forms/FormInputField";
-import AppFormFC from "../components/forms/AppForm";
-import RegisterUserButtonFC from "../components/forms/FormSubmitButton";
+import FormInputField from "../components/form/FormInputField";
+import AppFormFC from "../components/form/AppForm";
+import RegisterUserButtonFC from "../components/form/FormSubmitButton";
 
-import { NewUserData, validationSchema } from '../types/NewUserData';
+import { NewUser, validationSchema } from '../types//data/NewUser';
 import { useRegisterService } from '../services/AuthService';
 
 
@@ -23,10 +23,10 @@ type RegisterScreenProps = NativeStackScreenProps<RootStackParamList, 'Register'
 const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
     const RegisterService = useRegisterService();
 
-    const RegisterUserForm = AppFormFC<NewUserData>();
-    const RegisterUserButton = RegisterUserButtonFC<NewUserData>();
+    const RegisterUserForm = AppFormFC<NewUser>();
+    const RegisterUserButton = RegisterUserButtonFC<NewUser>();
 
-    const registerUserOnSubmit = async (data: NewUserData) => {
+    const registerUserOnSubmit = async (data: NewUser) => {
         const res = await RegisterService.post(data);
         
         if (typeof res === 'object') {

@@ -5,30 +5,30 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import Screen from "../components/Screen";
 import useAddTask from "../hooks/mutations/useAddTask";
-import FormInputField from "../components/forms/FormInputField";
+import FormInputField from "../components/form/FormInputField";
 
-import { validationSchema, AddTaskData } from "../types/AddTaskData";
-import AppFormFC from "../components/forms/AppForm";
-import AddTaskButtonFC from "../components/forms/FormSubmitButton";
-import FormDropdownPickerFC from "../components/DropdownInput";
+import { validationSchema, Task } from "../types/data/Task";
+import AppFormFC from "../components/form/AppForm";
+import AddTaskButtonFC from "../components/form/FormSubmitButton";
+import FormDropdownPickerFC from "../components/form/FormDropdownPicker";
 import { Category } from "../services/CategoryService";
 import useCategories from "../hooks/useCategories";
 
 
 
 
-type TaskEditScreenProps = BottomTabScreenProps<RootTabParamList, 'TaskEdit'>;
+type AddTaskScreenProps = BottomTabScreenProps<RootTabParamList, 'AddTask'>;
 
 
-const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
-    const AddTaskForm = AppFormFC<AddTaskData>();
-    const AddTaskButton = AddTaskButtonFC<AddTaskData>();
+const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
+    const AddTaskForm = AppFormFC<Task>();
+    const AddTaskButton = AddTaskButtonFC<Task>();
     const FormDropdownPicker = FormDropdownPickerFC<Category>();
 
     const { data, error, isLoading } = useCategories();
 
     const addTask = useAddTask(() => {Alert.alert('Success', 'Task has been added!')});
-    const addTaskOnSubmit = (data: AddTaskData) => addTask.mutate(data);
+    const addTaskOnSubmit = (data: Task) => addTask.mutate(data);
     
 
     return (
@@ -41,7 +41,7 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
                         priority: 0,
                         deadline: 0,
                         executionTime: 0,
-                        category: '',
+                        categoryTitle: '',
                     }}
                     validationSchema={validationSchema}
                     style={{}}
@@ -71,7 +71,7 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
                         keyboardType="numeric"
                     />
                     <FormDropdownPicker 
-                        name='category'
+                        name='categoryTitle'
                         data={data}
                     />
                     <AddTaskButton
@@ -97,5 +97,5 @@ const styles = StyleSheet.create({
 });
 
 
-export default TaskEditScreen;
+export default AddTaskScreen;
 

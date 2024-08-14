@@ -1,13 +1,7 @@
 import { useAuthStore } from "../store/auth";
 import APIClient, { AuthHeader } from "./APIClient";
+import { Task } from "../types/data/Task";
 
-
-export type Task = {
-    title: string;
-    deadline: number;
-    priority: number;
-    executionTime: number;
-};
 
 
 

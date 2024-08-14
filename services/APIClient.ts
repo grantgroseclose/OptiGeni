@@ -1,6 +1,6 @@
 import { ApiResponse } from 'apisauce';
 import { AxiosRequestConfig } from 'axios';
-import { TApiResponse } from '../types/ApiResponse';
+import { TApiResponse } from '../types/api/ApiResponse';
 import api from './ApiInstance';
 
 

@@ -7,12 +7,14 @@ const validationSchema = Yup.object({
     deadline: Yup.number().min(1, 'Deadline must be greater than 0').required('Deadline is required'),
     priority: Yup.number().min(1, 'Priority must be greater than 0').required('Priority is required'),
     executionTime: Yup.number().min(1, 'Execution must be greater than 0').required('Execution time is required'),
-    category: Yup.string().required('Category is required'),
-    description: Yup.string().required('Description is required')
+    categoryId: Yup.string(),
+    categoryTitle: Yup.string().required('Category is required'),
+    description: Yup.string().required('Description is required'),
+    status: Yup.string()
 });
   
-type AddTaskData = Yup.InferType<typeof validationSchema>;
+type Task = Yup.InferType<typeof validationSchema>;
 
 
 
-export { validationSchema, AddTaskData };
+export { validationSchema, Task };

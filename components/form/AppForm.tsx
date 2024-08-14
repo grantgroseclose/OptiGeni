@@ -2,7 +2,7 @@ import React from "react";
 import { View } from 'react-native';
 import { Formik, FormikValues } from "formik";
 
-import AppFormProps from "../../types/AppFormProps";
+import AppFormProps from "../../types/form/AppFormProps";
 
 
 

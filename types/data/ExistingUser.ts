@@ -7,8 +7,8 @@ const validationSchema = Yup.object({
     password: Yup.string().min(5, 'Password must have at least 5 characters').required('Password is required')
 });
   
-type ExistingUserData = Yup.InferType<typeof validationSchema>;
+type ExistingUser = Yup.InferType<typeof validationSchema>;
 
 
 
-export { validationSchema, ExistingUserData };
+export { validationSchema, ExistingUser };

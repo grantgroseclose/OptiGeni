@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormikContext, useField } from 'formik';
 
-import FormInputFieldProps from "../../types/FormInputFieldProps";
+import FormInputFieldProps from "../../types/form/FormInputFieldProps";
 import AppTextInput from "../AppTextInput";
 import ErrorMessage from "./validation/ErrorMessage";
 

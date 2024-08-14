@@ -14,40 +14,40 @@ import TaskCard from '../components/TaskCard';
 
 
 
-type ListScreenProps = BottomTabScreenProps<RootTabParamList, 'List'>;
+// type ListScreenProps = BottomTabScreenProps<RootTabParamList, 'List'>;
 
 
-const ListScreen: React.FC<ListScreenProps> = ({navigation}) => {
-    const { data: tasks, error, isLoading } = useTasks();
+// const ListScreen: React.FC<ListScreenProps> = ({navigation}) => {
+//     const { data: tasks, error, isLoading } = useTasks();
 
 
-    return (
-        <Screen passedStyle={styles.container}>
-        { isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
-            <ScrollView 
-                contentContainerStyle={{padding: '5%', width: screenWidth}}
-            >
+//     return (
+//         <Screen passedStyle={styles.container}>
+//         { isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
+//             <ScrollView 
+//                 contentContainerStyle={{padding: '5%', width: screenWidth}}
+//             >
 
-            { tasks &&
-                tasks.map((task, index) =>
-                    <TaskCard
-                        key={index}
-                        title={task.title}
-                        deadline={task.deadline}
-                        priority={task.priority}
-                        executionTime={task.executionTime}
-                        editable
-                        onPress={() => console.log('Pressed')}
-                        // onDelete={() => handleDelete(task)}
-                        onDelete={() => { return; }}
-                    />
-                )
-            }
-            </ScrollView>
-        }
-        </Screen>
-    );
-}
+//             { tasks &&
+//                 tasks.map((task, index) =>
+//                     <TaskCard
+//                         key={index}
+//                         title={task.title}
+//                         deadline={task.deadline}
+//                         priority={task.priority}
+//                         executionTime={task.executionTime}
+//                         editable
+//                         onPress={() => console.log('Pressed')}
+//                         // onDelete={() => handleDelete(task)}
+//                         onDelete={() => { return; }}
+//                     />
+//                 )
+//             }
+//             </ScrollView>
+//         }
+//         </Screen>
+//     );
+// }
 
 
 
@@ -59,5 +59,5 @@ const styles = StyleSheet.create({
 });
  
 
-export default ListScreen;
+// export default ListScreen;
 

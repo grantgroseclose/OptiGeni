@@ -10,22 +10,22 @@ import { useAuthStore } from '../store/auth';
 
 
 
-type AccountScreenProps = BottomTabScreenProps<RootTabParamList, 'Account'>;
+// type AccountScreenProps = BottomTabScreenProps<RootTabParamList, 'Account'>;
 
 
-const AccountScreen: React.FC<AccountScreenProps> = ({navigation}) => {
-    const logoutUser = useAuthStore((state) => state.logout);
+// const AccountScreen: React.FC<AccountScreenProps> = ({navigation}) => {
+//     const logoutUser = useAuthStore((state) => state.logout);
 
-    const logoutUserOnSubmit = () => {
-        logoutUser();
-    }
+//     const logoutUserOnSubmit = () => {
+//         logoutUser();
+//     }
 
-    return (
-        <Screen passedStyle={styles.container}>
-            <AppButton title={'Logout'} onPress={logoutUserOnSubmit} />
-        </Screen>
-    );
-}
+//     return (
+//         <Screen passedStyle={styles.container}>
+//             <AppButton title={'Logout'} onPress={logoutUserOnSubmit} />
+//         </Screen>
+//     );
+// }
 
 
 
@@ -37,5 +37,5 @@ const styles = StyleSheet.create({
 });
  
 
-export default AccountScreen;
+// export default AccountScreen;
 
