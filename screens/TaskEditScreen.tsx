@@ -37,10 +37,11 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
                 <AddTaskForm
                     initialValues={{
                         title: '',
+                        description: '',
                         priority: 0,
                         deadline: 0,
                         executionTime: 0,
-                        category: ''
+                        category: '',
                     }}
                     validationSchema={validationSchema}
                     style={{}}
@@ -49,6 +50,10 @@ const TaskEditScreen: React.FC<TaskEditScreenProps> = () => {
                     <FormInputField
                         name='title'
                         icon='pencil'
+                    />
+                    <FormInputField
+                        name='description'
+                        icon='note-edit'
                     />
                     <FormInputField
                         name='deadline'
