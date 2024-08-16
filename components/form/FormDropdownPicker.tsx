@@ -5,57 +5,64 @@ import {
 import { Dropdown } from "react-native-element-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useField, useFormikContext } from "formik";
-import { UseQueryResult } from "@tanstack/react-query";
 import FormInputFieldProps from "../../types/form/FormInputFieldProps";
-import { Category } from "../../services/CategoryService";
 
 import colors from "../../config/colors";
+import AddCategoryModal from "../modal/AddCategoryModal";
+import useModalStore from "../../store/modal";
 
 
 
 
-type DropdownComponentProps<TData> = {
-    data: TData[] | undefined;
+
+type DropdownComponentProps = {
+    data: { label: string; value: string; }[];
 } & FormInputFieldProps;
 
 
-// TODO: refactor data type
-const DropdownComponent = <TData extends Category>({
+
+
+const FormDropdownPicker: React.FC<DropdownComponentProps> = ({
     data,
     ...otherProps
-}: DropdownComponentProps<TData>) => {
+}) => {
+    const { toggleModal } = useModalStore();
     const { handleChange, setFieldValue } = useFormikContext();
     const [ field, meta, helpers ] = useField(otherProps);
 
+    const handleSelect = (item: { label: string, value: string }) => {
+        if (item.value === 'add-new') {
+            toggleModal();
+        }
+        else setFieldValue(field.name, item.label);
+    }
+
+
     return (
-        <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={data ? data : []}
-            search
-            maxHeight={300}
-            labelField="title"
-            valueField="title"
-            placeholder="Select category"
-            searchPlaceholder="Search..."
-            value={field.value}
-            onChange={(item: TData) => {
-                setFieldValue(field.name, item.title);
-            }}
-            renderLeftIcon={() => (
-                <MaterialCommunityIcons style={styles.icon} color="gray" name="menu" size={20} />
-            )}
-        />
+      <>
+          <AddCategoryModal />
+
+          <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={data ? data : []}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder="Select category"
+              searchPlaceholder="Search..."
+              value={field.value}
+              onChange={handleSelect}
+              renderLeftIcon={() => (
+                  <MaterialCommunityIcons style={styles.icon} color="gray" name="menu" size={20} />
+              )}
+          />
+      </>
     );
-};
-
-
-const FormDropdownPicker = <TData extends Category>() => {
-    const WrappedAppFormElement: React.FC<DropdownComponentProps<TData>> = (props) => <DropdownComponent {...props} />;
-    return WrappedAppFormElement;
 };
 
 

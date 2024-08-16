@@ -14,9 +14,7 @@ import useCategories from '../hooks/useCategories';
 import useTasks from '../hooks/useTasks';
 import CategoryFilterCard from '../components/CategoryFilterCard';
 import TaskCard from '../components/TaskCard';
-import { useAuthStore } from '../store/auth';
-import AppButton from '../components/AppButton';
-import { Category } from '../services/CategoryService';
+import { Category } from '../types/data/Category';
 
 
 
@@ -25,19 +23,15 @@ type HomeScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
 
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
+    // TODO: Fix undefined color bug
     const categoryQuery = useCategories();
     const taskQuery = useTasks();
 
-    const logoutUser = useAuthStore((state) => state.logout);
-
-    const logoutUserOnSubmit = () => {
-        logoutUser();
-    }
 
     const getCategoryColor = (taskCatTitle: string) => {
-        if (categoryQuery !== undefined && categoryQuery.data !== undefined) {
+        if (!categoryQuery.isLoading && categoryQuery !== undefined && categoryQuery.data !== undefined) {
             const cat: Category = categoryQuery.data.find(cat => taskCatTitle === cat.title) as Category;
-
+    
             return cat.color as string;
         }
 
@@ -47,68 +41,64 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
     return (
         <Screen passedStyle={{}}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
-
-                <View>
-                    <AppButton title={'Logout'} onPress={logoutUserOnSubmit} />
-                </View>
-
-
-
-
-                <View>
-                    <View style={styles.headerTextContainer}>
-                        <AppText passedStyle={styles.headerText} text={'Filter'} />
-                    </View>
+            {
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
 
                     <View>
-                    { categoryQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
-                        { categoryQuery?.data &&
-                          categoryQuery.data.map((cat, index) =>
-                            <CategoryFilterCard
-                                key={index}
-                                title={cat.title}
-                                color={cat.color}
-                            />
-                        )}
-                        </ScrollView>
-                    }
-                    </View>
-                </View>
+                        <View style={styles.headerTextContainer}>
+                            <AppText passedStyle={styles.headerText} text={'Filter'} />
+                        </View>
 
-
-
-
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <View style={styles.headerTextContainer}>
-                        <AppText passedStyle={styles.headerText} text={'Optimal'} />
+                        <View>
+                        { categoryQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
+                            { categoryQuery?.data &&
+                            categoryQuery.data.map((cat, index) =>
+                                <CategoryFilterCard
+                                    key={index}
+                                    title={cat.title}
+                                    color={cat.color}
+                                />
+                            )}
+                            </ScrollView>
+                        }
+                        </View>
                     </View>
 
-                    <View style={{width: '100%'}}>
-                    { taskQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
-                        <>{ taskQuery?.data &&
-                          taskQuery.data.map((task, index) =>
-                            <TaskCard
-                                key={index}
-                                title={task.title}
-                                category_color={() => getCategoryColor(task.categoryTitle)}
-                                description={task.description}
-                                deadline={task.deadline}
-                                priority={task.priority}
-                                executionTime={task.executionTime}
-                                editable
-                                onPress={() => console.log('Pressed')}
-                                // onDelete={() => handleDelete(task)}
-                                onDelete={() => { return; }}
-                            />
-                        )}</>
-                    }
-                    </View>
-                </View>
 
-            </ScrollView>
+
+
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                        <View style={styles.headerTextContainer}>
+                            <AppText passedStyle={styles.headerText} text={'Optimal'} />
+                        </View>
+
+                        <View style={{width: '100%'}}>
+                        { taskQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
+                            <>{ taskQuery?.data &&
+                            taskQuery.data.map((task, index) =>
+                                <TaskCard
+                                    key={index}
+                                    title={task.title}
+                                    category_color={() => getCategoryColor(task.categoryTitle)}
+                                    description={task.description}
+                                    deadline={task.deadline}
+                                    priority={task.priority}
+                                    executionTime={task.executionTime}
+                                    editable
+                                    onPress={() => console.log('Pressed')}
+                                    // onDelete={() => handleDelete(task)}
+                                    onDelete={() => { return; }}
+                                />
+                            )}</>
+                        }
+                        </View>
+                    </View>
+
+                </ScrollView>
+            }
         </Screen>
+    
     );
 }
 

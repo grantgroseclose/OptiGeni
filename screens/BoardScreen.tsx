@@ -6,23 +6,20 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import Screen from '../components/Screen';
 import AppButton from '../components/AppButton';
 import { useAuthStore } from '../store/auth';
+import AppText from '../components/AppText';
+import colors, { material_colors } from '../config/colors';
 
 
 
 
-type AccountScreenProps = BottomTabScreenProps<RootTabParamList, 'Account'>;
+type BoardScreenProps = BottomTabScreenProps<RootTabParamList, 'Board'>;
 
 
-const AccountScreen: React.FC<AccountScreenProps> = ({navigation}) => {
-    const logoutUser = useAuthStore((state) => state.logout);
-
-    const logoutUserOnSubmit = () => {
-        logoutUser();
-    }
+const BoardScreen: React.FC<BoardScreenProps> = ({navigation}) => {
 
     return (
         <Screen passedStyle={styles.container}>
-            <AppButton title={'Logout'} onPress={logoutUserOnSubmit} />
+            <AppText passedStyle={{color: material_colors.amber.amber, fontSize: 72}} text={'Board'} />
         </Screen>
     );
 }
@@ -37,5 +34,5 @@ const styles = StyleSheet.create({
 });
  
 
-export default AccountScreen;
+export default BoardScreen;
 

@@ -12,8 +12,8 @@ export type AuthHeader = {
 
 
 class APIClient<TReq, TRes> {
-    endpoint: string;
-    authHeader: AuthHeader;
+    private endpoint: string;
+    private authHeader: AuthHeader;
 
     constructor(endpoint: string, header?: AuthHeader) {
         this.endpoint = endpoint;

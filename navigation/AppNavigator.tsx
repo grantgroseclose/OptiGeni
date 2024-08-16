@@ -2,16 +2,16 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import colors from "../config/colors";
+import colors, { material_colors } from "../config/colors";
 import routes from "./routes";
 
 import HomeScreen from "../screens/HomeScreen";
 import CalendarScreen from "../screens/CalendarScreen";
-// import ListScreen from "../screens/ListScreen";
-// import AccountScreen from "../screens/AccountScreen";
+import AccountScreen from "../screens/AccountScreen";
 import AddTaskScreen from "../screens/AddTaskScreen";
 
 import NewTaskButton from "./NewTaskButton";
+import BoardScreen from "../screens/BoardScreen";
 
 
 
@@ -20,8 +20,8 @@ export type RootTabParamList = {
   Home: undefined;
   Calendar: undefined;
   AddTask: undefined;
-  // List: undefined;
-  // Account: undefined;
+  Board: undefined;
+  Account: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -36,15 +36,25 @@ const AppNavigator: React.FC<AppNavigatorProps> = () => (
         headerShown: false,
         tabBarStyle: { 
           backgroundColor: colors.primary,
-          borderTopColor: colors.medium
+          borderTopWidth: 0,
+          shadowColor: material_colors.grey.darken4,
+          shadowRadius: 25,
+          shadowOpacity: 0.7
         },
-        tabBarActiveTintColor: colors.blue
+        tabBarActiveTintColor: material_colors.cyan.accent3
       }}>
       <Tab.Screen
         name='Home'
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='home-outline' size={size} color={focused ? colors.blue : colors.light } />
+          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='home-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 } />
+        }}
+      />
+      <Tab.Screen
+        name='Calendar'
+        component={CalendarScreen}
+        options={{
+          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='calendar-month-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 }/>
         }}
       />
       <Tab.Screen
@@ -66,26 +76,19 @@ const AppNavigator: React.FC<AppNavigatorProps> = () => (
         })}
       />
       <Tab.Screen
-        name='Calendar'
-        component={CalendarScreen}
+        name='Board'
+        component={BoardScreen}
         options={{
-          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='calendar-month-outline' size={size} color={focused ? colors.blue : colors.light }/>
+          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='table-large' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 } />
         }}
       />
-      {/* <Tab.Screen
-        name='List'
-        component={ListScreen}
-        options={{
-          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='clipboard-list' size={size} color={focused ? colors.blue : colors.light }/>
-        }}
-      /> */}
-      {/* <Tab.Screen
+      <Tab.Screen
         name='Account'
         component={AccountScreen}
         options={{
-          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='account-outline' size={size} color={focused ? colors.blue : colors.light }/>
+          tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='account-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 }/>
         }}
-      /> */}
+      />
     </Tab.Navigator>
 )
 

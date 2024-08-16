@@ -1,12 +1,7 @@
 import { useAuthStore } from "../store/auth";
+import { Category } from "../types/data/Category";
 import APIClient, { AuthHeader } from "./APIClient";
 
-
-export type Category = {
-    userId: string;
-    title: string;
-    color: string;
-};
 
 
 

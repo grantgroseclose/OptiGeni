@@ -2,7 +2,8 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import colors from "../config/colors";
+import colors, { material_colors } from "../config/colors";
+import { screenWidth } from "../config/dimensions";
 
 
 
@@ -18,8 +19,8 @@ const NewTaskButton: React.FC<NewTaskButtonProps> = ({ onPress }) => {
       <View style={styles.container}>
         <MaterialCommunityIcons
           name="plus-circle"
-          color={colors.blue}
-          size={80}
+          color={material_colors.cyan.accent3}
+          size={screenWidth * .25}
         />
       </View>
     </TouchableOpacity>
@@ -33,14 +34,17 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: 'transparent',
-    borderColor: colors.blue,
+    shadowOpacity: 0.7,
+    shadowRadius: 20,
+    shadowColor: material_colors.cyan.accent3,
+    // borderColor: colors.blue,
     // borderRadius: 40,
     // borderWidth: 10,
     bottom: 20,
-    height: 80,
+    height: screenWidth * .25,
     justifyContent: "center",
     alignSelf: 'center',
-    width: 80,
+    width: screenWidth * .25,
   },
 });
 

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CACHE_KEY_CATEGORIES } from '../constants';
-import { Category, useCategoryService } from '../services/CategoryService';
+import { Category } from '../types/data/Category';
+import { useCategoryService } from '../services/CategoryService';
 
 
 
