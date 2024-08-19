@@ -46,7 +46,9 @@ export const useAuthStore = create(
 
                 return;
             },
-            logout: () => set((state) => ({ token: "", isAuth: false, error: "" }))
+            logout: () => { 
+                set((state) => ({ token: "", isAuth: false, error: "" }));
+            }
         }),
         { name: 'auth-store', storage: createJSONStorage(() => AsyncStorage) }
     )
