@@ -28,6 +28,7 @@
     "react-native-element-dropdown": "^2.12.1",
     "react-native-progress": "^5.0.1",
     "react-native-public-ip": "^1.0.2",
+    "react-native-svg": "^15.5.0",
     "yup": "^1.4.0",
     "zod": "^3.23.8",
     "zustand": "^4.5.2"

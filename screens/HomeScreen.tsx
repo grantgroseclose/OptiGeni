@@ -80,11 +80,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                                 <TaskCard
                                     key={index}
                                     title={task.title}
-                                    category_color={() => getCategoryColor(task.categoryTitle)}
+                                    categoryColor={() => getCategoryColor(task.categoryTitle)}
                                     description={task.description}
                                     deadline={task.deadline}
                                     priority={task.priority}
                                     executionTime={task.executionTime}
+                                    status={task.status ? task.status : 'Not started'}
                                     editable
                                     onPress={() => console.log('Pressed')}
                                     // onDelete={() => handleDelete(task)}

@@ -13,17 +13,20 @@ type AppIconProps = {
     backgroundColor: string;
     iconColor: string;
     align: FlexAlignType;
+    justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly";
 };
 
 
-const AppIcon: React.FC<AppIconProps> = ({ name, size = 40, backgroundColor = colors.blue, iconColor = colors.light, align }) => {
+const AppIcon: React.FC<AppIconProps> = ({ name, size = 40, backgroundColor = colors.blue, iconColor = colors.light, align, justify }) => {
+    const jfy = justify ? justify : 'center';
+
     return (
         <View style={{
             width: size,
             height: size,
             borderRadius: size / 2,
             backgroundColor,
-            justifyContent: 'center',
+            justifyContent: jfy,
             alignItems: 'center',
             alignSelf: align
         }}>

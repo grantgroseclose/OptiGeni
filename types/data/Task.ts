@@ -2,6 +2,10 @@ import * as Yup from 'yup';
 
 
 
+
+export type TaskStatus = 'Not started' | 'In-progress' | 'Complete';
+
+
 const validationSchema = Yup.object({
     title: Yup.string().min(2, 'Title must have at least 2 characters').required('Title is required'),
     deadline: Yup.number().min(1, 'Deadline must be greater than 0').required('Deadline is required'),
@@ -10,11 +14,11 @@ const validationSchema = Yup.object({
     categoryId: Yup.string(),
     categoryTitle: Yup.string().required('Category is required'),
     description: Yup.string().required('Description is required'),
-    status: Yup.string()
+    status: Yup.string().oneOf<TaskStatus>(['Not started', 'In-progress', 'Complete'])
 });
-  
+
+
+
 type Task = Yup.InferType<typeof validationSchema>;
-
-
 
 export { validationSchema, Task };
