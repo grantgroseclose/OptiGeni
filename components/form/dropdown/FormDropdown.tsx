@@ -5,11 +5,10 @@ import {
 import { Dropdown } from "react-native-element-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useField, useFormikContext } from "formik";
-import FormInputFieldProps from "../../types/form/FormInputFieldProps";
+import FormInputFieldProps from "../../../types/form/FormInputFieldProps";
 
-import colors from "../../config/colors";
-import AddCategoryModal from "../modal/AddCategoryModal";
-import useModalStore from "../../store/modal";
+import colors from "../../../config/colors";
+import useModalStore from "../../../store/modal";
 
 
 
@@ -22,7 +21,7 @@ type DropdownComponentProps = {
 
 
 
-const FormDropdownPicker: React.FC<DropdownComponentProps> = ({
+const FormDropdown: React.FC<DropdownComponentProps> = ({
     data,
     ...otherProps
 }) => {
@@ -39,29 +38,25 @@ const FormDropdownPicker: React.FC<DropdownComponentProps> = ({
 
 
     return (
-      <>
-          <AddCategoryModal />
-
-          <Dropdown
-              style={styles.dropdown}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={data ? data : []}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder="Select category"
-              searchPlaceholder="Search..."
-              value={field.value}
-              onChange={handleSelect}
-              renderLeftIcon={() => (
-                  <MaterialCommunityIcons style={styles.icon} color="gray" name="menu" size={20} />
-              )}
-          />
-      </>
+        <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={data ? data : []}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder="Select category"
+            searchPlaceholder="Search..."
+            value={field.value}
+            onChange={handleSelect}
+            renderLeftIcon={() => (
+                <MaterialCommunityIcons style={styles.icon} color="gray" name="menu" size={20} />
+            )}
+        />
     );
 };
 
@@ -98,4 +93,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default FormDropdownPicker;
+export default FormDropdown;

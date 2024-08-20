@@ -7,7 +7,7 @@ import useCategories from "../../hooks/useCategories";
 import FormInputField from "./FormInputField";
 import createAppForm from "./AppForm";
 import createFormSubmitButton from "./FormSubmitButton";
-import FormDropdownPicker from "./FormDropdownPicker";
+import AddCategoryDropdownPicker from "./dropdown/AddCategoryDropdownPicker";
 
 
 
@@ -15,11 +15,6 @@ import FormDropdownPicker from "./FormDropdownPicker";
 const AddTaskForm: React.FC = () => {
     const AddTaskForm = createAppForm<Task>();
     const AddTaskButton = createFormSubmitButton<Task>();
-
-    const { data, error, isLoading } = useCategories();
-    const category_picker_data = data ?
-        data?.map(cat => ({ label: cat.title, value: cat.title })).concat([{ label: 'Add new category...', value: 'add-new' }])
-    : [];
 
     const addTask = useAddTask(() => {Alert.alert('Success', 'Task has been added!')});
     const addTaskOnSubmit = (data: Task) => addTask.mutate(data);
@@ -62,10 +57,7 @@ const AddTaskForm: React.FC = () => {
                 icon='timer-sand'
                 keyboardType="numeric"
             />
-            <FormDropdownPicker 
-                name='categoryTitle'
-                data={category_picker_data}
-            />
+            <AddCategoryDropdownPicker />
             <AddTaskButton
                 title='Submit'
             />
