@@ -4,52 +4,38 @@ import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import AppText from "./AppText";
 import colors, { material_colors } from "../config/colors";
 import AppIcon from "./AppIcon";
-import { TaskStatus } from "../types/data/Task";
+import { Status, statusColorMap } from "../types/data/Status";
 
 import Svg, { Circle } from 'react-native-svg';
+import { Category } from "../types/data/Category";
 
 
 
 
-type TaskCardProps = {
-    categoryColor: () => string;
+
+export type TaskCardProps = {
+    category: Category;
     title: string;
     description: string;
     deadline: number;
     priority: number;
     executionTime: number;
-    status: TaskStatus;
+    status: Status;
     editable: boolean;
-    onPress: () => void;
-    onDelete: () => void;
 };
 
 
-const TaskCard: React.FC<TaskCardProps> = ({categoryColor, title, description, deadline, priority, executionTime, status, editable, onPress, onDelete}) => {
-    const cat_color: string = categoryColor() as string;
 
-    const statusColor = () => {
-        switch (status) {
-            case 'Not started': {
-                return material_colors.red.accent4
-            }
-            case 'In-progress': {
-                return material_colors.yellow.accent3;
-            }
-            case 'Complete': {
-                return material_colors.green.accent3;
-            }
-        }
-    }
 
-    const status_color = statusColor();
+const TaskCard: React.FC<TaskCardProps> = ({category, title, description, deadline, priority, executionTime, status, editable}) => {
+    const statusCol = statusColorMap[status];
 
+    
     return (
         <View
             style={styles.card}
-            // onPress={onPress}
         >
-            <View style={[styles.detailsOuterContainer, { borderLeftColor: cat_color }]}>
+            <View style={[styles.detailsOuterContainer, { borderLeftColor: category.color }]}>
                 <View style={styles.detailsInnerContainer}>
                     <View>
                         <AppText passedStyle={styles.title} text={title} />
@@ -65,12 +51,12 @@ const TaskCard: React.FC<TaskCardProps> = ({categoryColor, title, description, d
                             width: 0,
                             height: 1
                         },
-                        shadowColor: status_color,
+                        shadowColor: statusCol,
                         shadowOpacity: .5,
                         shadowRadius: 5,
                         elevation: 5
                     }}>
-                        <Circle cx="8" cy="8" r="8" fill={status_color} />
+                        <Circle cx="8" cy="8" r="8" fill={statusCol} />
                     </Svg>
                     <AppText passedStyle={styles.status} text={status} />
                 </View>

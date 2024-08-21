@@ -1,9 +1,7 @@
 import * as Yup from 'yup';
+import { Status } from './Status';
 
 
-
-
-export type TaskStatus = 'Not started' | 'In-progress' | 'Complete';
 
 
 const validationSchema = Yup.object({
@@ -14,7 +12,7 @@ const validationSchema = Yup.object({
     categoryId: Yup.string(),
     categoryTitle: Yup.string().required('Category is required'),
     description: Yup.string().required('Description is required'),
-    status: Yup.string().oneOf<TaskStatus>(['Not started', 'In-progress', 'Complete'])
+    status: Yup.string().oneOf<Status>(['Not started', 'In-progress', 'Complete'])
 });
 
 

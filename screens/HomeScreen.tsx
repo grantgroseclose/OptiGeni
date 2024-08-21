@@ -15,6 +15,8 @@ import useTasks from '../hooks/useTasks';
 import CategoryFilterCard from '../components/CategoryFilterCard';
 import TaskCard from '../components/TaskCard';
 import { Category } from '../types/data/Category';
+import { Task } from '../types/data/Task';
+
 
 
 
@@ -27,15 +29,30 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     const categoryQuery = useCategories();
     const taskQuery = useTasks();
 
-
-    const getCategoryColor = (taskCatTitle: string) => {
+    const getTaskCategory = (taskCatTitle: string): Category => {
         if (!categoryQuery.isLoading && categoryQuery !== undefined && categoryQuery.data !== undefined) {
             const cat: Category = categoryQuery.data.find(cat => taskCatTitle === cat.title) as Category;
     
-            return cat.color as string;
+            return cat as Category;
         }
 
-        return material_colors.blue.blue;
+        return {} as Category;
+    }
+
+    const renderTaskCard = (index: number, task: Task) => {
+        const cat = getTaskCategory(task.categoryTitle);
+
+        return <TaskCard
+            key={index}
+            title={task.title}
+            category={cat}
+            description={task.description}
+            deadline={task.deadline}
+            priority={task.priority}
+            executionTime={task.executionTime}
+            status={task.status ? task.status : 'Not started'}
+            editable
+        />
     }
 
 
@@ -76,21 +93,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                         <View style={{width: '100%'}}>
                         { taskQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
                             <>{ taskQuery?.data &&
-                            taskQuery.data.map((task, index) =>
-                                <TaskCard
-                                    key={index}
-                                    title={task.title}
-                                    categoryColor={() => getCategoryColor(task.categoryTitle)}
-                                    description={task.description}
-                                    deadline={task.deadline}
-                                    priority={task.priority}
-                                    executionTime={task.executionTime}
-                                    status={task.status ? task.status : 'Not started'}
-                                    editable
-                                    onPress={() => console.log('Pressed')}
-                                    // onDelete={() => handleDelete(task)}
-                                    onDelete={() => { return; }}
-                                />
+                            taskQuery.data.map((task, index) => 
+                                renderTaskCard(index, task)
                             )}</>
                         }
                         </View>
