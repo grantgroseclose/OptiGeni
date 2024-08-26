@@ -24,6 +24,7 @@ const AddTaskForm: React.FC = () => {
     return (
         <AddTaskForm
             initialValues={{
+                uId: '',
                 title: '',
                 description: '',
                 priority: 0,

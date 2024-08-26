@@ -19,7 +19,7 @@ const AddCategoryForm: React.FC = () => {
     const AddCategoryButton = createFormSubmitButton<Category>();
 
     const addCategory = useAddCategory(() => {Alert.alert('Success', 'Category has been added!')});
-    const addCategoryOnSubmit = (data: Category) => { 
+    const addCategoryOnSubmit = (data: Category) => {
         addCategory.mutate(data); 
         toggleModal();
     }
@@ -28,6 +28,7 @@ const AddCategoryForm: React.FC = () => {
     return (
         <AddCategoryForm
             initialValues={{
+                uId: '',
                 title: '',
                 color: ''
             }}
