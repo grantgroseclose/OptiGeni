@@ -39,10 +39,11 @@ class APIClient<TReq extends z.ZodTypeAny, TRes extends z.ZodTypeAny, TResRaw = 
         return this.handleResponse(res);
     };
 
-    delete = async (params: IdParam): Promise<void> => {
-        await api.delete(this.endpoint, params, this.getHeader());
+    delete = async (data: z.infer<TReq>): Promise<z.infer<TRes>> => {
+                                                        // TODO: Fix param type any
+        const res = await api.delete(`${this.endpoint}/delete`, { uId: data.uId }, this.getHeader());
 
-        return;
+        return this.handleResponse(res);
     };
 
 
@@ -53,10 +54,14 @@ class APIClient<TReq extends z.ZodTypeAny, TRes extends z.ZodTypeAny, TResRaw = 
     protected handleResponse = (res: ApiResponse<unknown>, expectArray: boolean = false): z.infer<TRes> | z.infer<z.ZodArray<z.infer<TRes>>> | Promise<never> => {
         try {
             if (expectArray) {
-                return z.array(this.schema).parse(res.data) as z.infer<z.ZodArray<z.infer<TRes>>>;
+                const result = z.array(this.schema).parse(res.data) as z.infer<z.ZodArray<z.infer<TRes>>>;
+
+                return result;
             }
 
-            return this.schema.parse(res.data) as z.infer<TRes>;
+            const result = this.schema.parse(res.data) as z.infer<TRes>;
+
+            return result;
         } catch (err) {
             if (err instanceof z.ZodError) {
                 return Promise.reject(err);

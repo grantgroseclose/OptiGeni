@@ -1,5 +1,5 @@
 export type IdParam = {
-    id: string;
+    uId: string;
 }
 
 export type AuthHeader = {

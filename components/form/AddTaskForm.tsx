@@ -3,12 +3,12 @@ import { Alert } from "react-native";
 
 import { Task, taskSchema } from "../../types/data/Task";
 import useAddTask from "../../hooks/mutations/useAddTask";
-import useCategories from "../../hooks/useCategories";
 import FormInputField from "./FormInputField";
 import createAppForm from "./AppForm";
 import createFormSubmitButton from "./FormSubmitButton";
 import AddCategoryDropdownPicker from "./dropdown/AddCategoryDropdownPicker";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import generateUniqueId from "../../utility/generateUniqueId";
 
 
 
@@ -18,7 +18,12 @@ const AddTaskForm: React.FC = () => {
     const AddTaskButton = createFormSubmitButton<Task>();
 
     const addTask = useAddTask(() => {Alert.alert('Success', 'Task has been added!')});
-    const addTaskOnSubmit = (data: Task) => addTask.mutate(data);
+    const addTaskOnSubmit = (data: Task) => { 
+        const uId = generateUniqueId();
+        const newTask = { ...data, uId };
+
+        addTask.mutate(newTask); 
+    }
     
 
     return (

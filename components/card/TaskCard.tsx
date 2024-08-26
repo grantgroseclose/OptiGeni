@@ -9,12 +9,14 @@ import { Status, statusColorMap } from "../../types/data/Status";
 import Svg, { Circle } from 'react-native-svg';
 import { Category } from "../../types/data/Category";
 import CardModDropdown from "./CardModDropdown";
+import { Task } from "../../types/data/Task";
 
 
 
 
 
 export type TaskCardProps = {
+    task: Task;
     category: Category;
     title: string;
     description: string;
@@ -28,7 +30,7 @@ export type TaskCardProps = {
 
 
 
-const TaskCard: React.FC<TaskCardProps> = ({category, title, description, deadline, priority, executionTime, status, editable}) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, category, title, description, deadline, priority, executionTime, status, editable }) => {
     const statusCol = statusColorMap[status];
 
     
@@ -43,7 +45,7 @@ const TaskCard: React.FC<TaskCardProps> = ({category, title, description, deadli
                         <AppText passedStyle={styles.desc} text={`Due in ${deadline} days`} />
                     </View>
                     
-                    <CardModDropdown />
+                    <CardModDropdown task={task} />
                 </View>
 
                 <View style={{ flexDirection: 'row', alignSelf: "flex-end", alignItems: 'center' }}>

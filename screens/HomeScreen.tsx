@@ -59,6 +59,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
         return <TaskCard
             key={index}
+            task={task}
             title={task.title}
             category={cat}
             description={task.description}

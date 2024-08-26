@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    Alert,
   StyleSheet
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
@@ -10,13 +11,15 @@ import FormInputFieldProps from "../../types/form/FormInputFieldProps";
 import colors, { material_colors } from "../../config/colors";
 import useModalStore from "../../store/modal";
 import { screenWidth } from "../../config/dimensions";
+import useDeleteTask from "../../hooks/mutations/useDeleteTask";
+import { Task } from "../../types/data/Task";
 
 
 
 
 
 type CardModDropdownProps = {
-    data: { label: string; value: string; }[];
+    task: Task;
 };
 
 const dropdownElements = [
@@ -27,15 +30,24 @@ const dropdownElements = [
 
 
 
-const CardModDropdown: React.FC = ({
-    // data,
+const CardModDropdown: React.FC<CardModDropdownProps> = ({
+    task,
     ...otherProps
 }) => {
     const { toggleModal } = useModalStore();
 
+    const deleteTask = useDeleteTask(() => {Alert.alert('Success', 'Task deleted!')});
+
+    const deleteTaskOnSubmit = () => { 
+        Alert.alert('Delete', 'Are you sure you want to delete this task?', [
+            { text: "Yes", onPress: () => deleteTask.mutate(task) },
+            { text: "No" }
+        ]); 
+    }
+
     const handleSelect = (item: { label: string, value: string }) => {
-        if (item.value === 'add-new') {
-            toggleModal();
+        if (item.value === 'delete') {
+            deleteTaskOnSubmit();
         }
     }
 
