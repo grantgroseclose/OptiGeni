@@ -1,13 +1,14 @@
 import React from "react";
 import { Alert } from "react-native";
 
-import { validationSchema, Task } from "../../types/data/Task";
+import { Task, taskSchema } from "../../types/data/Task";
 import useAddTask from "../../hooks/mutations/useAddTask";
 import useCategories from "../../hooks/useCategories";
 import FormInputField from "./FormInputField";
 import createAppForm from "./AppForm";
 import createFormSubmitButton from "./FormSubmitButton";
 import AddCategoryDropdownPicker from "./dropdown/AddCategoryDropdownPicker";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 
 
 
@@ -30,7 +31,7 @@ const AddTaskForm: React.FC = () => {
                 executionTime: 0,
                 categoryTitle: '',
             }}
-            validationSchema={validationSchema}
+            validationSchema={toFormikValidationSchema(taskSchema)}
             style={{}}
             onSubmit={addTaskOnSubmit}
         >

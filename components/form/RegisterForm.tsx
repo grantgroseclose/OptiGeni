@@ -6,10 +6,11 @@ import createAppForm from "./AppForm";
 import createFormSubmitButton from "./FormSubmitButton";
 
 import { useRegisterService } from '../../services/AuthService';
-import { NewUser, validationSchema } from '../../types/data/NewUser';
+import { NewUser, newUserSchema } from '../../types/data/NewUser';
 
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/AuthNavigator';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 
 
@@ -26,11 +27,10 @@ const RegisterForm: React.FC = () => {
 
     const registerUserOnSubmit = async (data: NewUser) => {
         const res = await RegisterService.post(data);
-        
-        if (typeof res === 'object') {
-            if ('error' in res && res.error !== "") {
-                return Alert.alert('Error', res.error);
-            }
+
+        if (typeof res === 'object' && 'error' in res) {
+            Alert.alert('Error', res.error);
+        } else {
             Alert.alert('Success!', 'Registration successful.', [
                 { text: "Ok", onPress: () => navigation.navigate('Start') },
             ]);
@@ -45,7 +45,7 @@ const RegisterForm: React.FC = () => {
                 password: '',
                 firstname: ''
             }}
-            validationSchema={validationSchema}
+            validationSchema={toFormikValidationSchema(newUserSchema)}
             style={{}}
             onSubmit={registerUserOnSubmit}
         >

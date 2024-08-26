@@ -1,13 +1,15 @@
 import { useAuthStore } from "../store/auth";
-import APIClient, { AuthHeader } from "./APIClient";
-import { Task } from "../types/data/Task";
+import { Task, TTaskSchema, taskSchema } from "../types/data/Task";
+import api from "./ApiInstance";
+import { AuthHeader } from "../types/api/AuthHeader";
+import APIClient from "../types/api/APIClient";
 
 
 
 
-export const useTaskService = (): APIClient<Task, Task> => {
+export const useTaskService = (): APIClient<TTaskSchema, TTaskSchema, Task> => {
     const authToken = useAuthStore(state => state.token);
     const authHeader: AuthHeader = { 'x-auth-token': authToken };
 
-    return new APIClient<Task, Task>('/tasks', authHeader);
+    return new APIClient<TTaskSchema, TTaskSchema, Task>(api, '/tasks', taskSchema, authHeader);
 };

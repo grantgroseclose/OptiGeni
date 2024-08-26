@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 
-import AppText from "./AppText";
-import colors, { material_colors } from "../config/colors";
-import AppIcon from "./AppIcon";
-import { Status, statusColorMap } from "../types/data/Status";
+import AppText from "../AppText";
+import colors, { material_colors } from "../../config/colors";
+import AppIcon from "../AppIcon";
+import { Status, statusColorMap } from "../../types/data/Status";
 
 import Svg, { Circle } from 'react-native-svg';
-import { Category } from "../types/data/Category";
+import { Category } from "../../types/data/Category";
+import CardModDropdown from "./CardModDropdown";
 
 
 
@@ -42,7 +43,7 @@ const TaskCard: React.FC<TaskCardProps> = ({category, title, description, deadli
                         <AppText passedStyle={styles.desc} text={`Due in ${deadline} days`} />
                     </View>
                     
-                    <AppIcon name='dots-horizontal' iconColor={material_colors.grey.darken1} size={40} backgroundColor={'transparent'} align='flex-start' justify='flex-start' />
+                    <CardModDropdown />
                 </View>
 
                 <View style={{ flexDirection: 'row', alignSelf: "flex-end", alignItems: 'center' }}>
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
             height: 2
         },
         shadowColor: material_colors.shades.black,
-        shadowOpacity: .75,
+        shadowOpacity: 1,
         shadowRadius: 5,
         elevation: 5
     },

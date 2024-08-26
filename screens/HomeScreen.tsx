@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { RootTabParamList } from '../navigation/AppNavigator';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
@@ -12,8 +12,8 @@ import Screen from '../components/Screen';
 import AppText from '../components/AppText';
 import useCategories from '../hooks/useCategories';
 import useTasks from '../hooks/useTasks';
-import CategoryFilterCard from '../components/CategoryFilterCard';
-import TaskCard from '../components/TaskCard';
+import CategoryFilterCard from '../components/card/CategoryFilterCard';
+import TaskCard from '../components/card/TaskCard';
 import { Category } from '../types/data/Category';
 import { Task } from '../types/data/Task';
 
@@ -25,9 +25,24 @@ type HomeScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
 
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
-    // TODO: Fix undefined color bug
     const categoryQuery = useCategories();
     const taskQuery = useTasks();
+
+    // console.log(taskQuery.data);
+    
+    if (categoryQuery.isPending || taskQuery.isPending) {
+        return (
+            <Screen passedStyle={{}}>
+                <ActivityIndicator size='large' color={colors.blue} />
+            </Screen>
+        );
+    }
+
+    if (categoryQuery.isError || taskQuery.isError) {
+        return;
+    }
+
+    // taskQuery.data.forEach(task => console.log(task));
 
     const getTaskCategory = (taskCatTitle: string): Category => {
         if (!categoryQuery.isLoading && categoryQuery !== undefined && categoryQuery.data !== undefined) {
@@ -69,8 +84,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                         <View>
                         { categoryQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
-                            { categoryQuery?.data &&
-                            categoryQuery.data.map((cat, index) =>
+                            { Array.isArray(categoryQuery.data) && categoryQuery.data?.map((cat, index) =>
                                 <CategoryFilterCard
                                     key={index}
                                     title={cat.title}
@@ -92,8 +106,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
                         <View style={{width: '100%'}}>
                         { taskQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
-                            <>{ taskQuery?.data &&
-                            taskQuery.data.map((task, index) => 
+                            <>{ Array.isArray(taskQuery.data) && taskQuery.data?.map((task, index) => 
                                 renderTaskCard(index, task)
                             )}</>
                         }

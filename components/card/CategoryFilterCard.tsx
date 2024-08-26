@@ -5,12 +5,12 @@ import {
     TouchableOpacity, 
 } from "react-native";
 
-import AppText from "./AppText";
-import colors from "../config/colors";
+import AppText from "../AppText";
+import colors from "../../config/colors";
 import { 
     screenHeight, 
     screenWidth
-} from "../config/dimensions";
+} from "../../config/dimensions";
 
 
 

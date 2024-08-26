@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Category, validationSchema } from '../../types/data/Category';
+import { Category, categorySchema } from '../../types/data/Category';
 import createAppForm from '../form/AppForm';
 import createFormSubmitButton from '../form/FormSubmitButton';
 import FormInputField from '../form/FormInputField';
 import useAddCategory from '../../hooks/mutations/useAddCategory';
 import { Alert, StyleSheet, View } from 'react-native';
 import useModalStore from '../../store/modal';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 
 
@@ -30,7 +31,7 @@ const AddCategoryForm: React.FC = () => {
                 title: '',
                 color: ''
             }}
-            validationSchema={validationSchema}
+            validationSchema={toFormikValidationSchema(categorySchema)}
             style={styles.formContainer}
             onSubmit={addCategoryOnSubmit}
         >

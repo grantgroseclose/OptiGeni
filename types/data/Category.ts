@@ -1,16 +1,17 @@
-import * as Yup from 'yup';
+import { z } from "zod";
 
 
 
-const validationSchema = Yup.object({
-    userId: Yup.string(),
-    title: Yup.string().required('Title is required'),
-    color: Yup.string().required('Color is required')
+const categorySchema = z.object({
+    userId: z.string().optional(),
+    title: z.string(),
+    color: z.string()
 });
 
 
 
-type Category = Yup.InferType<typeof validationSchema>;
+type TCategorySchema = typeof categorySchema;
+type        Category = z.infer<TCategorySchema>;
 
 
-export { validationSchema, Category };
+export { categorySchema, TCategorySchema, Category };

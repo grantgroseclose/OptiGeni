@@ -5,8 +5,9 @@ import FormInputField from "./FormInputField";
 import createAppForm from "./AppForm";
 import createFormSubmitButton from "./FormSubmitButton";
 
-import { ExistingUser, validationSchema } from '../../types/data/ExistingUser';
+import { ExistingUser, existingUserSchema } from '../../types/data/ExistingUser';
 import { useAuthStore } from '../../store/auth';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 
 
@@ -32,7 +33,7 @@ const LoginForm: React.FC = () => {
                 username: '',
                 password: ''
             }}
-            validationSchema={validationSchema}
+            validationSchema={toFormikValidationSchema(existingUserSchema)}
             style={{}}
             onSubmit={loginUserOnSubmit}
         >
