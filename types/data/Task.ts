@@ -7,7 +7,7 @@ import { Status } from './Status';
 const taskSchema = z.object({
     uId: z.string().min(1).optional(),
     title: z.string().min(2, 'Title must have at least 2 characters'),
-    deadline: z.coerce.number().min(1, 'Deadline must be greater than 0'),
+    deadline: z.coerce.date(),
     priority: z.coerce.number().min(1, 'Priority must be greater than 0'),
     executionTime: z.coerce.number().min(1, 'Execution must be greater than 0'),
     categoryId: z.string().optional(),

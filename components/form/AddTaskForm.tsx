@@ -33,7 +33,7 @@ const AddTaskForm: React.FC = () => {
                 title: '',
                 description: '',
                 priority: 0,
-                deadline: 0,
+                deadline: new Date(),
                 executionTime: 0,
                 categoryTitle: '',
             }}

@@ -280,7 +280,7 @@ export type TMaterialColors = {
         darken4: '#263238'
     },
     grey: {
-        red: '#9E9E9E',
+        grey: '#9E9E9E',
         lighten5: '#FAFAFA',
         lighten4: '#F5F5F5',
         lighten3: '#EEEEEE',

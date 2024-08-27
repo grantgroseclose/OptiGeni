@@ -10,6 +10,8 @@ import Svg, { Circle } from 'react-native-svg';
 import { Category } from "../../types/data/Category";
 import CardModDropdown from "./CardModDropdown";
 import { Task } from "../../types/data/Task";
+import extractMonth from "../../utility/extractMonth";
+import extractDay from "../../utility/extractDay";
 
 
 
@@ -20,7 +22,7 @@ export type TaskCardProps = {
     category: Category;
     title: string;
     description: string;
-    deadline: number;
+    deadline: Date;
     priority: number;
     executionTime: number;
     status: Status;
@@ -33,16 +35,25 @@ export type TaskCardProps = {
 const TaskCard: React.FC<TaskCardProps> = ({ task, category, title, description, deadline, priority, executionTime, status, editable }) => {
     const statusCol = statusColorMap[status];
 
+    const extractedDate = deadline.getUTCDate().toString();
+    const extractedDay = extractDay(deadline.getUTCDay());
+    const extractedMonth = extractMonth(deadline.getUTCMonth());
+
+    const dueDate = `Due ${extractedDay}, ${extractedMonth} ${extractedDate}`;
+
     
     return (
-        <View
-            style={styles.card}
-        >
+        <View style={styles.card}>
             <View style={[styles.detailsOuterContainer, { borderLeftColor: category.color }]}>
                 <View style={styles.detailsInnerContainer}>
                     <View>
                         <AppText passedStyle={styles.title} text={title} />
-                        <AppText passedStyle={styles.desc} text={`Due in ${deadline} days`} />
+
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                             <AppText passedStyle={styles.desc} text={dueDate} />
+
+                            <AppIcon name='calendar-month' size={50} align='flex-end' backgroundColor="transparent" iconColor={material_colors.grey.grey} />
+                        </View>
                     </View>
                     
                     <CardModDropdown task={task} />
@@ -108,9 +119,9 @@ const styles = StyleSheet.create({
         marginBottom: 24
     },
     title: {
-        fontFamily: 'Inter-Light',
-        color: material_colors.grey.lighten2,
-        marginBottom: 4
+        fontFamily: 'Inter-Regular',
+        fontSize: 20,
+        color: material_colors.grey.lighten2
     },
     desc: {
         fontFamily: 'Inter',
