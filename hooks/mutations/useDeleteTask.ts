@@ -13,5 +13,4 @@ const useDeleteTask = (onDelete: () => void) => {
 }
 
 
-
 export default useDeleteTask;

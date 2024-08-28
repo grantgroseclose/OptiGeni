@@ -27,13 +27,13 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
 
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-  form_container: {
-    padding: 15,
-    width: '100%'
-  }
+	container: {
+		padding: 10,
+	},
+	form_container: {
+		padding: 15,
+		width: '100%'
+	}
 });
 
 

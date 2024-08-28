@@ -3,6 +3,7 @@ import { AuthHeader, IdParam } from "./AuthHeader";
 import api from "../../services/ApiInstance";
 import { AxiosRequestConfig } from "axios";
 import { z } from "zod";
+import { Alert } from "react-native";
 
 
 
@@ -64,6 +65,8 @@ class APIClient<TReq extends z.ZodTypeAny, TRes extends z.ZodTypeAny, TResRaw = 
             return result;
         } catch (err) {
             if (err instanceof z.ZodError) {
+                // console.log(err);
+                // Alert.alert('Error', 'Unknown API error');
                 return Promise.reject(err);
             }
         }

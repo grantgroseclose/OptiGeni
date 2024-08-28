@@ -6,9 +6,10 @@ import useAddTask from "../../hooks/mutations/useAddTask";
 import FormInputField from "./FormInputField";
 import createAppForm from "./AppForm";
 import createFormSubmitButton from "./FormSubmitButton";
-import AddCategoryDropdownPicker from "./dropdown/AddCategoryDropdownPicker";
+import CategoryPicker from "./dropdown/CategoryPicker";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import generateUniqueId from "../../utility/generateUniqueId";
+import DateTimePicker from "./DateTimePicker";
 
 
 
@@ -49,11 +50,7 @@ const AddTaskForm: React.FC = () => {
                 name='description'
                 icon='note-edit'
             />
-            <FormInputField
-                name='deadline'
-                icon='alarm'
-                keyboardType="numeric"
-            />
+            <DateTimePicker />
             <FormInputField
                 name='priority'
                 icon='alert-circle-check-outline'
@@ -64,7 +61,7 @@ const AddTaskForm: React.FC = () => {
                 icon='timer-sand'
                 keyboardType="numeric"
             />
-            <AddCategoryDropdownPicker />
+            <CategoryPicker />
             <AddTaskButton
                 title='Submit'
             />

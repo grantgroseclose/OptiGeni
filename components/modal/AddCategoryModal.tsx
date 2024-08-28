@@ -1,24 +1,26 @@
 import React from 'react';
-import AppModal from './AppModal';
-import useModalStore from '../../store/modal';
+import createAppModal from './AppModal';
+import { appModals, CategoryModal } from '../../store/modal';
 
 import AddCategoryForm from '../form/AddCategoryForm';
+import useModal from '../../hooks/useModal';
 
 
 
 
 const AddCategoryModal: React.FC = () => {
-    const { isOpen } = useModalStore();
+    const { isOpen } = useModal<CategoryModal>(appModals['Category']);
+    const CategoryDropdownModal = createAppModal<CategoryModal>();
 
 
     return (
-      <>
-          { isOpen && 
-            <AppModal>
-                <AddCategoryForm />
-            </AppModal>
-          }
-      </>
+        <>
+			{ isOpen &&
+				<CategoryDropdownModal modal={appModals['Category']}>
+					<AddCategoryForm />
+				</CategoryDropdownModal>
+			}
+        </>
     );
 };
 

@@ -6,21 +6,27 @@ import createFormSubmitButton from '../form/FormSubmitButton';
 import FormInputField from '../form/FormInputField';
 import useAddCategory from '../../hooks/mutations/useAddCategory';
 import { Alert, StyleSheet, View } from 'react-native';
-import useModalStore from '../../store/modal';
+import { appModals, CategoryModal } from '../../store/modal';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import useModal from '../../hooks/useModal';
+import generateUniqueId from '../../utility/generateUniqueId';
 
 
 
 
 const AddCategoryForm: React.FC = () => {
-    const { toggleModal } = useModalStore();
+    const { toggleModal } = useModal<CategoryModal>(appModals['Category']);
 
     const AddCategoryForm = createAppForm<Category>();
     const AddCategoryButton = createFormSubmitButton<Category>();
 
     const addCategory = useAddCategory(() => {Alert.alert('Success', 'Category has been added!')});
-    const addCategoryOnSubmit = (data: Category) => {
-        addCategory.mutate(data); 
+
+    const addCategoryOnSubmit = (data: Category) => { 
+        const uId = generateUniqueId();
+        const newCat = { ...data, uId };
+
+        addCategory.mutate(newCat); 
         toggleModal();
     }
 

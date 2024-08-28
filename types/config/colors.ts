@@ -297,3 +297,12 @@ export type TMaterialColors = {
         transparent: '#FFFFFF0'
     }
 };
+
+
+type ExtractMaterialPalette<T> = T extends Record<string, infer U>
+    ? U extends string
+        ? U
+        : ExtractMaterialPalette<U>
+    : never;
+
+export type MaterialColor = ExtractMaterialPalette<TMaterialColors>;

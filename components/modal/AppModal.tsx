@@ -3,42 +3,57 @@ import { Modal, View, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } f
 import AppIcon from '../AppIcon';
 import colors, { material_colors } from '../../config/colors';
 import { screenWidth } from '../../config/dimensions';
-import useModalStore from '../../store/modal';
+import { Modals } from '../../store/modal';
+import useModal from '../../hooks/useModal';
 
 
 
 
 
-type AppModalProps = {
-    children: React.ReactNode;
+export type AppModalProps<TModal extends Modals> = {
+	modal: TModal;
+	children: React.ReactNode;
 };
 
 
-const AppModal: React.FC<AppModalProps> = ({ children }) => {
-    const { isOpen, toggleModal } = useModalStore();
 
 
-    return (
-        <Modal
-          animationType='slide'
-          transparent
-          visible={isOpen}>
-            <View style={styles.centeredView}>            
-                <View style={styles.modalView}>
-                    <View>
-                      <TouchableOpacity onPress={toggleModal} style={styles.closeIcon}>
-                          <AppIcon name='window-close' iconColor={material_colors.grey.darken1} size={70} backgroundColor={'transparent'} align='flex-end' />
-                      </TouchableOpacity>
-                    </View>
+const AppModalElement = <TModal extends Modals>({
+	modal,
+	children
+}: AppModalProps<TModal>) => {
+	const { isOpen, toggleModal } = useModal<TModal>(modal);
 
-                    <View style={styles.formContainer}>
-                      { children }
-                    </View>
-                </View>
-            </View>
-        </Modal>
-    );
+	return (
+		<Modal
+			animationType='slide'
+			transparent
+			visible={isOpen}
+		>
+			<View style={styles.centeredView}>            
+				<View style={styles.modalView}>
+					<View>
+						<TouchableOpacity onPress={toggleModal} style={styles.closeIcon}>
+							<AppIcon name='window-close' iconColor={material_colors.grey.darken1} size={70} backgroundColor={'transparent'} align='flex-end' />
+						</TouchableOpacity>
+					</View>
+
+					<View style={styles.formContainer}>
+						{ children }
+					</View>
+				</View>
+			</View>
+		</Modal>
+	);
 }
+
+
+const AppModal = <TModal extends Modals>() => {
+	const WrappedAppElement: React.FC<AppModalProps<TModal>> = (props) => <AppModalElement {...props} />;
+	return WrappedAppElement;
+};
+
+
 
 
 
@@ -85,5 +100,4 @@ const styles = StyleSheet.create({
 
 
 export default AppModal;
-
 
