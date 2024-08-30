@@ -1,13 +1,14 @@
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
+import Toast from 'react-native-toast-message';
 
 import { Category, categorySchema } from '../../types/data/Category';
 import createAppForm from '../form/AppForm';
 import createFormSubmitButton from '../form/FormSubmitButton';
 import FormInputField from '../form/FormInputField';
 import useAddCategory from '../../hooks/mutations/useAddCategory';
-import { Alert, StyleSheet, View } from 'react-native';
 import { appModals, CategoryModal } from '../../store/modal';
-import { toFormikValidationSchema } from 'zod-formik-adapter';
 import useModal from '../../hooks/useModal';
 import generateUniqueId from '../../utility/generateUniqueId';
 
@@ -20,8 +21,15 @@ const AddCategoryForm: React.FC = () => {
     const AddCategoryForm = createAppForm<Category>();
     const AddCategoryButton = createFormSubmitButton<Category>();
 
-    const addCategory = useAddCategory(() => {Alert.alert('Success', 'Category has been added!')});
+    const toastSuccess = () => {
+        Toast.show({
+            type: 'success',
+            text1: `Success`,
+            text2: `Category added!`
+        });
+    }
 
+    const addCategory = useAddCategory(toastSuccess);
     const addCategoryOnSubmit = (data: Category) => { 
         const uId = generateUniqueId();
         const newCat = { ...data, uId };

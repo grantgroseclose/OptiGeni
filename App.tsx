@@ -3,6 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
+import Toast from 'react-native-toast-message'
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
@@ -12,6 +13,7 @@ import AuthNavigator from './navigation/AuthNavigator';
 
 import { useAuthStore } from './store/auth';
 import AppDrawer from './components/AppDrawer';
+import toastConfig from './config/toast';
 
 
 
@@ -49,6 +51,7 @@ export default function App() {
 					<AuthNavigator /> 
 				}
 			</NavigationContainer>
+			<Toast config={toastConfig}/>
 		</QueryClientProvider>
 	);
 }

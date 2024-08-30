@@ -5,12 +5,10 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useField, useFormikContext } from "formik";
-import FormInputFieldProps from "../../types/form/FormInputFieldProps";
+import Toast from "react-native-toast-message";
 
-import colors, { material_colors } from "../../config/colors";
+import { material_colors } from "../../config/colors";
 import useModalStore from "../../store/modal";
-import { screenWidth } from "../../config/dimensions";
 import useDeleteTask from "../../hooks/mutations/useDeleteTask";
 import { Task } from "../../types/data/Task";
 
@@ -36,8 +34,15 @@ const CardModDropdown: React.FC<CardModDropdownProps> = ({
 }) => {
     const { toggleModal } = useModalStore();
 
-    const deleteTask = useDeleteTask(() => {Alert.alert('Success', 'Task deleted!')});
+    const toastSuccess = () => {
+        Toast.show({
+            type: 'success',
+            text1: `Success`,
+            text2: `Task deleted!`
+        });
+    }
 
+    const deleteTask = useDeleteTask(toastSuccess);
     const deleteTaskOnSubmit = () => { 
         Alert.alert('Delete', 'Are you sure you want to delete this task?', [
             { text: "Yes", onPress: () => deleteTask.mutate(task) },

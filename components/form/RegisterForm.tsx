@@ -1,5 +1,7 @@
 import React from 'react';
-import { Alert } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
+import Toast from 'react-native-toast-message';
 
 import FormInputField from "./FormInputField";
 import createAppForm from "./AppForm";
@@ -8,9 +10,7 @@ import createFormSubmitButton from "./FormSubmitButton";
 import { useRegisterService } from '../../services/AuthService';
 import { NewUser, newUserSchema } from '../../types/data/NewUser';
 
-import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/AuthNavigator';
-import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 
 
@@ -25,15 +25,30 @@ const RegisterForm: React.FC = () => {
     const RegisterUserForm = createAppForm<NewUser>();
     const RegisterUserButton = createFormSubmitButton<NewUser>();
 
+    const toastError = (err: string) => {
+        Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: err
+        });
+    }
+
+    const toastSuccess = () => {
+        Toast.show({
+            type: 'success',
+            text1: `Success`,
+            text2: `Registration complete!`,
+            onHide: () => navigation.navigate('Start')
+        });
+    }
+
     const registerUserOnSubmit = async (data: NewUser) => {
         const res = await RegisterService.post(data);
 
         if (typeof res === 'object' && 'error' in res) {
-            Alert.alert('Error', res.error);
+            toastError(res.error);
         } else {
-            Alert.alert('Success!', 'Registration successful.', [
-                { text: "Ok", onPress: () => navigation.navigate('Start') },
-            ]);
+            toastSuccess();
         }
     };
     
