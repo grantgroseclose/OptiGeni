@@ -2,8 +2,7 @@ import React from "react";
 import { View, TextInput, StyleSheet, TextInputProps } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import colors from "../config/colors";
-
+import colors, { material_colors } from "../config/colors";
 
 
 
@@ -11,6 +10,7 @@ import colors from "../config/colors";
 type InputProps = {
     icon: any;
 };
+
 
 const AppTextInput: React.FC<InputProps & TextInputProps> = ({icon, ...otherProps}) => {
     return (
@@ -31,9 +31,13 @@ const AppTextInput: React.FC<InputProps & TextInputProps> = ({icon, ...otherProp
 
 
 
+
+
+
+
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.light,
+        backgroundColor: material_colors.grey.darken4,
         borderRadius: 25,
         flexDirection: 'row',
         width: '100%',
@@ -44,10 +48,10 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     text: {
-        width: '90%',
+        flex: 1,
         fontSize: 18,
         fontFamily: 'Avenir',
-        color: colors.dark
+        color: material_colors.grey.lighten2
     }
 });
 

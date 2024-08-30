@@ -6,7 +6,7 @@ import {
 } from "react-native";
 
 import AppText from "../AppText";
-import colors from "../../config/colors";
+import colors, { material_colors } from "../../config/colors";
 import { 
     screenHeight, 
     screenWidth
@@ -26,11 +26,13 @@ const CategoryFilterCard: React.FC<CategoryFilterCardProps> = ({
     color
 }) => {
     return (
-        <TouchableOpacity style={[styles.card, { backgroundColor: color }]}>
-            <View style={styles.detailsContainer}>
-                <AppText passedStyle={styles.title} text={title} />
-            </View>
-        </TouchableOpacity>
+        <View style={[styles.cardContainer, { backgroundColor: color }]}>
+            <TouchableOpacity style={[styles.card]}>
+                <View style={styles.detailsContainer}>
+                    <AppText passedStyle={[styles.title, { color: color }]} text={title} />
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 };
 
@@ -38,20 +40,36 @@ const CategoryFilterCard: React.FC<CategoryFilterCardProps> = ({
 
 
 const styles = StyleSheet.create({
-    card: {
-        width: screenWidth * 0.235,
-        height: screenHeight * 0.15,
+    cardContainer: {
         borderRadius: 15,
-        marginLeft: screenWidth * .025,
-        marginRight: screenWidth * .025
-    },
-    detailsContainer: {
-        paddingHorizontal: '5%',
+        height: screenWidth * 0.285,
+        marginHorizontal: screenWidth * .025,
         justifyContent: 'center'
     },
+    card: {
+        backgroundColor: colors.dark,
+        width: screenWidth * 0.25,
+        height: screenWidth * 0.25,
+        borderRadius: 15,
+        marginLeft: screenWidth * .025,
+        marginRight: screenWidth * .025,
+        shadowOffset: {
+            width: 2,
+            height: 2
+        },
+        shadowColor: material_colors.shades.black,
+        shadowOpacity: 1,
+        shadowRadius: 5,
+        elevation: 5
+    },
+    detailsContainer: {
+        flex: 1,
+        paddingHorizontal: '5%',
+        justifyContent: 'center',
+    },
     title: {
-        fontFamily: 'Inter-Bold',
-        color: colors.primary,
+        fontFamily: 'Inter-Medium',
+        alignSelf: 'center'
     }
 });
 

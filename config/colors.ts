@@ -17,6 +17,8 @@ export default {
 
     secondary: '#AAAAAA',
 
+    modal: '#181818',
+
     blue: '#00C3DE',
 
     purple: '#7E20DC',

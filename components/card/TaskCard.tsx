@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 15,
         marginVertical: '2.5%',
-        backgroundColor: colors.O4DP,
+        backgroundColor: colors.modal,
         shadowOffset: {
             width: 2,
             height: 2

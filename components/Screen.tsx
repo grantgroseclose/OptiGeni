@@ -22,7 +22,7 @@ const Screen: React.FC<ScreenProps> = ({ passedStyle, children }) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: colors.primary,
+        backgroundColor: colors.dark,
         alignItems: 'center',
         justifyContent: 'center'
     }

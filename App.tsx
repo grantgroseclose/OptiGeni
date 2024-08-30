@@ -1,3 +1,4 @@
+import './gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -10,6 +11,7 @@ import AppNavigator from './navigation/AppNavigator';
 import AuthNavigator from './navigation/AuthNavigator';
 
 import { useAuthStore } from './store/auth';
+import AppDrawer from './components/AppDrawer';
 
 
 
@@ -40,7 +42,12 @@ export default function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<NavigationContainer>
-				{ isAuth ? <AppNavigator /> : <AuthNavigator /> }
+				{ isAuth ? 
+					<AppDrawer>
+						<AppNavigator />
+					</AppDrawer> : 
+					<AuthNavigator /> 
+				}
 			</NavigationContainer>
 		</QueryClientProvider>
 	);

@@ -1,13 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { RootTabParamList } from '../navigation/AppNavigator';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import colors, { material_colors } from '../config/colors';
-import {
-    screenHeight,
-    screenWidth
-} from '../config/dimensions';
 import Screen from '../components/Screen';
 import AppText from '../components/AppText';
 import useCategories from '../hooks/useCategories';
@@ -16,6 +12,8 @@ import CategoryFilterCard from '../components/card/CategoryFilterCard';
 import TaskCard from '../components/card/TaskCard';
 import { Category } from '../types/data/Category';
 import { Task } from '../types/data/Task';
+import { useQueryClient } from '@tanstack/react-query';
+import { useAuthStore } from '../store/auth';
 
 
 
@@ -28,7 +26,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     const categoryQuery = useCategories();
     const taskQuery = useTasks();
 
-    // console.log(taskQuery.data);
+    const queryClient = useQueryClient();
+    const logoutUser = useAuthStore((state) => state.logout);
+    const logoutUserOnSubmit = () => {
+        queryClient.clear();
+        logoutUser();
+    }
     
     if (categoryQuery.isPending || taskQuery.isPending) {
         return (
@@ -41,8 +44,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     if (categoryQuery.isError || taskQuery.isError) {
         return;
     }
-
-    // taskQuery.data.forEach(task => console.log(task));
 
     const getTaskCategory = (taskCatTitle: string): Category => {
         if (!categoryQuery.isLoading && categoryQuery !== undefined && categoryQuery.data !== undefined) {
@@ -74,50 +75,41 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
     return (
         <Screen passedStyle={{}}>
-            {
-                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
-
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingVertical: '5%'}}>
+                <View style={styles.headerTextContainer}>
+                    <AppText passedStyle={styles.headerText} text={'Category'} />
+                </View>
+                <View style={{paddingVertical: '1.25%'}}>
                     <View>
-                        <View style={styles.headerTextContainer}>
-                            <AppText passedStyle={styles.headerText} text={'Filter'} />
-                        </View>
-
-                        <View>
-                        { categoryQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
-                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{padding: '5%'}}>
-                            { Array.isArray(categoryQuery.data) && categoryQuery.data?.map((cat, index) =>
-                                <CategoryFilterCard
-                                    key={index}
-                                    title={cat.title}
-                                    color={cat.color}
-                                />
-                            )}
-                            </ScrollView>
-                        }
-                        </View>
+                    { categoryQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingHorizontal: '5%', paddingVertical: '1.25%'}}>
+                        { Array.isArray(categoryQuery.data) && categoryQuery.data?.map((cat, index) =>
+                            <CategoryFilterCard
+                                key={index}
+                                title={cat.title}
+                                color={cat.color}
+                            />
+                        )}
+                        </ScrollView>
+                    }
                     </View>
+                </View>
 
 
-
-
-                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                        <View style={styles.headerTextContainer}>
-                            <AppText passedStyle={styles.headerText} text={'Optimal'} />
-                        </View>
-
-                        <View style={{width: '100%'}}>
-                        { taskQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
-                            <>{ Array.isArray(taskQuery.data) && taskQuery.data?.map((task, index) => 
-                                renderTaskCard(index, task)
-                            )}</>
-                        }
-                        </View>
+                <View style={styles.headerTextContainer}>
+                    <AppText passedStyle={styles.headerText} text={'My Tasks'} />
+                </View>
+                <View style={{alignItems: 'center', justifyContent: 'center', paddingHorizontal: '5%'}}>
+                    <View style={{width: '100%'}}>
+                    { taskQuery.isLoading ? <ActivityIndicator size='large' color={colors.blue} /> :
+                        <>{ Array.isArray(taskQuery.data) && taskQuery.data?.map((task, index) => 
+                            renderTaskCard(index, task)
+                        )}</>
+                    }
                     </View>
-
-                </ScrollView>
-            }
+                </View>
+            </ScrollView>
         </Screen>
-    
     );
 }
 
@@ -132,7 +124,7 @@ const styles = StyleSheet.create({
         marginBottom: '2.5%'
     },
     headerTextContainer: {
-        paddingHorizontal: '2.5%',
+        paddingHorizontal: '5%',
         paddingVertical: '5%',
         alignItems: 'center',
         justifyContent: 'center',

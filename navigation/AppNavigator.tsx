@@ -7,21 +7,18 @@ import routes from "./routes";
 
 import HomeScreen from "../screens/HomeScreen";
 import CalendarScreen from "../screens/CalendarScreen";
-import AccountScreen from "../screens/AccountScreen";
 import AddTaskScreen from "../screens/AddTaskScreen";
 
 import NewTaskButton from "./NewTaskButton";
-import BoardScreen from "../screens/BoardScreen";
+import { screenHeight } from "../config/dimensions";
 
 
 
 
 export type RootTabParamList = {
 	Home: undefined;
-	Calendar: undefined;
 	AddTask: undefined;
-	Board: undefined;
-	Account: undefined;
+	Calendar: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -35,11 +32,14 @@ const AppNavigator: React.FC<AppNavigatorProps> = () => (
     <Tab.Navigator screenOptions={{ 
         headerShown: false,
         tabBarStyle: { 
-			backgroundColor: colors.primary,
+			backgroundColor: colors.dark,
 			borderTopWidth: 0,
-			shadowColor: material_colors.grey.darken4,
-			shadowRadius: 25,
-			shadowOpacity: 0.7
+			// shadowColor: material_colors.purple.accent3,
+			// shadowRadius: 25,
+			// shadowOpacity: .5
+			shadowColor: material_colors.shades.black,
+			shadowRadius: 10,
+			shadowOpacity: 1
         },
         tabBarActiveTintColor: material_colors.cyan.accent3
     }}>
@@ -50,13 +50,6 @@ const AppNavigator: React.FC<AppNavigatorProps> = () => (
 				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='home-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 } />
 			}}
 		/>
-		<Tab.Screen
-			name='Calendar'
-			component={CalendarScreen}
-			options={{
-				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='calendar-month-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 }/>
-			}}
-			/>
 		<Tab.Screen
 			name="AddTask"
 			component={AddTaskScreen}
@@ -76,17 +69,10 @@ const AppNavigator: React.FC<AppNavigatorProps> = () => (
 			})}
 		/>
 		<Tab.Screen
-			name='Board'
-			component={BoardScreen}
+			name='Calendar'
+			component={CalendarScreen}
 			options={{
-				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='table-large' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 } />
-			}}
-		/>
-		<Tab.Screen
-			name='Account'
-			component={AccountScreen}
-			options={{
-				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='account-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 }/>
+				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='calendar-month-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 }/>
 			}}
 		/>
     </Tab.Navigator>

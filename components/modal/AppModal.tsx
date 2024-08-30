@@ -4,6 +4,7 @@ import AppIcon from '../AppIcon';
 import colors, { material_colors } from '../../config/colors';
 import { screenWidth } from '../../config/dimensions';
 import { Modals } from '../../store/modal';
+
 import useModal from '../../hooks/useModal';
 
 
@@ -26,7 +27,7 @@ const AppModalElement = <TModal extends Modals>({
 
 	return (
 		<Modal
-			animationType='slide'
+      animationType='slide'
 			transparent
 			visible={isOpen}
 		>
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     modalView: {
         width: '100%',
         height: '90%',
-        backgroundColor: material_colors.grey.darken4,
+        backgroundColor: colors.modal,
         borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: {

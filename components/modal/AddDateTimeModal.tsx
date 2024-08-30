@@ -5,7 +5,7 @@ import {
 import { useField, useFormikContext } from "formik";
 import FormInputFieldProps from "../../types/form/FormInputFieldProps";
 
-import colors from "../../config/colors";
+import colors, { material_colors } from "../../config/colors";
 import { CalendarModal, appModals } from "../../store/modal";
 import createAppModal from '../modal/AppModal';
 import { Calendar, DateData } from "react-native-calendars";
@@ -34,8 +34,28 @@ const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
     return (
         <>
             { isOpen && 
-                <CalendarDropdownModal modal='Calendar'>
-                    <Calendar onDayPress={handleSelect} />
+                <CalendarDropdownModal modal={appModals['Calendar']} >
+                    <Calendar onDayPress={handleSelect} 
+                        theme={{
+                            monthTextColor: material_colors.grey.lighten3,
+                            backgroundColor: 'transparent',
+                            calendarBackground: 'transparent',
+                            textSectionTitleColor: material_colors.grey.grey,
+                            selectedDayBackgroundColor: '#00adf5',
+                            selectedDayTextColor: material_colors.cyan.accent3,
+                            todayTextColor: material_colors.cyan.accent3,
+                            arrowColor: material_colors.cyan.accent3,
+                            dayTextColor: '#2d4150',
+                            textDisabledColor: 'transparent',
+
+                            textDayFontFamily: 'Inter-Regular',
+                            textMonthFontFamily: 'Inter-Regular',
+                            textDayHeaderFontFamily: 'Inter-Regular',
+                            textDayFontSize: 18,
+                            textMonthFontSize: 24,
+                            textDayHeaderFontSize: 12,
+                        }}
+                    />
                 </CalendarDropdownModal>
             }
         </>

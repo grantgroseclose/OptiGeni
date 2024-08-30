@@ -62,8 +62,6 @@ const CardModDropdown: React.FC<CardModDropdownProps> = ({
             search={false}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
-            // iconStyle={styles.iconStyle}
-            // data={data ? data : []}
             data={dropdownElements}
             maxHeight={300}
             labelField="label"
@@ -88,7 +86,7 @@ const styles = StyleSheet.create({
     container: {
         width: '37.5%',
         left: '56.25%',
-        backgroundColor: material_colors.grey.darken4,
+        backgroundColor: material_colors.purple.accent3,
         borderWidth: 0,
         borderRadius: 15,
         shadowColor: material_colors.shades.black,
