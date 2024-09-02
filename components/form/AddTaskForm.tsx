@@ -15,7 +15,7 @@ import DateTimePicker from "./DateTimePicker";
 
 
 const AddTaskForm: React.FC = () => {
-    const AddTaskForm = createAppForm<Task>();
+    const AddTaskAppForm = createAppForm<Task>();
     const AddTaskButton = createFormSubmitButton<Task>();
 
     const toastSuccess = () => {
@@ -36,7 +36,7 @@ const AddTaskForm: React.FC = () => {
     
 
     return (
-        <AddTaskForm
+        <AddTaskAppForm
             initialValues={{
                 uId: '',
                 title: '',
@@ -73,7 +73,7 @@ const AddTaskForm: React.FC = () => {
             <AddTaskButton
                 title='Submit'
             />
-        </AddTaskForm>
+        </AddTaskAppForm>
     );
 }
 

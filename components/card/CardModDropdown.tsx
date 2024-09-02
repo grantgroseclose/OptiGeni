@@ -8,9 +8,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Toast from "react-native-toast-message";
 
 import { material_colors } from "../../config/colors";
-import useModalStore from "../../store/modal";
+import { appModals, UpdateTaskModal } from "../../store/modal";
 import useDeleteTask from "../../hooks/mutations/useDeleteTask";
 import { Task } from "../../types/data/Task";
+import useModal from "../../hooks/useModal";
+import { useTaskStore } from "../../store/task";
 
 
 
@@ -21,7 +23,7 @@ type CardModDropdownProps = {
 };
 
 const dropdownElements = [
-    { label: 'Modify', value: 'modify'},
+    { label: 'Update', value: 'update'},
     { label: 'Delete', value: 'delete'}
 ]
 
@@ -29,10 +31,10 @@ const dropdownElements = [
 
 
 const CardModDropdown: React.FC<CardModDropdownProps> = ({
-    task,
-    ...otherProps
+    task
 }) => {
-    const { toggleModal } = useModalStore();
+    const { toggleModal } = useModal<UpdateTaskModal>(appModals['UpdateTask']);
+    const { setTask } = useTaskStore();
 
     const toastSuccess = () => {
         Toast.show({
@@ -51,8 +53,16 @@ const CardModDropdown: React.FC<CardModDropdownProps> = ({
     }
 
     const handleSelect = (item: { label: string, value: string }) => {
-        if (item.value === 'delete') {
-            deleteTaskOnSubmit();
+        switch (item.value) {
+            case 'delete': {
+                deleteTaskOnSubmit();
+                break;
+            }
+            case 'update': {
+                setTask(task);
+                toggleModal();
+                break;
+            }
         }
     }
 

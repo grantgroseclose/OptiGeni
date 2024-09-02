@@ -1,14 +1,13 @@
 import { ApiResponse, ApisauceInstance } from "apisauce";
-import { AuthHeader, IdParam } from "./AuthHeader";
+import { AuthHeader } from "./AuthHeader";
 import api from "../../services/ApiInstance";
 import { AxiosRequestConfig } from "axios";
 import { z } from "zod";
-import { Alert } from "react-native";
 
 
 
 
-class APIClient<TReq extends z.ZodTypeAny, TRes extends z.ZodTypeAny, TResRaw = undefined> {
+class APIClient<TReq extends z.ZodTypeAny, TRes extends z.ZodTypeAny> {
     protected api: ApisauceInstance;
     protected endpoint: string;
     protected header: AuthHeader;
@@ -21,7 +20,7 @@ class APIClient<TReq extends z.ZodTypeAny, TRes extends z.ZodTypeAny, TResRaw = 
         this.header = header;
     }
 
-    getAll = async (): Promise<TResRaw[]> => {
+    getAll = async (): Promise<z.infer<z.ZodArray<TRes>>> => {
         const res = await api.get(this.endpoint, {}, this.getHeader());
 
         return this.handleResponse(res, true);
@@ -52,10 +51,10 @@ class APIClient<TReq extends z.ZodTypeAny, TRes extends z.ZodTypeAny, TResRaw = 
         return this.header ? { headers: this.header } : undefined;
     };
 
-    protected handleResponse = (res: ApiResponse<unknown>, expectArray: boolean = false): z.infer<TRes> | z.infer<z.ZodArray<z.infer<TRes>>> | Promise<never> => {
+    protected handleResponse = (res: ApiResponse<unknown>, expectArray: boolean = false): z.infer<TRes> | z.infer<z.ZodArray<TRes>> | Promise<never> => {
         try {
             if (expectArray) {
-                const result = z.array(this.schema).parse(res.data) as z.infer<z.ZodArray<z.infer<TRes>>>;
+                const result = z.array(this.schema).parse(res.data) as z.infer<z.ZodArray<TRes>>;
 
                 return result;
             }

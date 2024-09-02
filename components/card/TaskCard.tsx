@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 
 import AppText from "../AppText";
 import colors, { material_colors } from "../../config/colors";
@@ -12,6 +12,7 @@ import CardModDropdown from "./CardModDropdown";
 import { Task } from "../../types/data/Task";
 import extractMonth from "../../utility/extractMonth";
 import extractDay from "../../utility/extractDay";
+import UpdateTaskStatusModal from "../modal/UpdateTaskStatusModal";
 
 
 
@@ -20,24 +21,17 @@ import extractDay from "../../utility/extractDay";
 export type TaskCardProps = {
     task: Task;
     category: Category;
-    title: string;
-    description: string;
-    deadline: Date;
-    priority: number;
-    executionTime: number;
-    status: Status;
-    editable: boolean;
 };
 
 
 
 
-const TaskCard: React.FC<TaskCardProps> = ({ task, category, title, description, deadline, priority, executionTime, status, editable }) => {
-    const statusCol = statusColorMap[status];
+const TaskCard: React.FC<TaskCardProps> = ({ task, category }) => {
+    const statusCol = statusColorMap[task.status as Status];
 
-    const extractedDate = deadline.getUTCDate().toString();
-    const extractedDay = extractDay(deadline.getUTCDay());
-    const extractedMonth = extractMonth(deadline.getUTCMonth());
+    const extractedDate = task.deadline.getUTCDate().toString();
+    const extractedDay = extractDay(task.deadline.getUTCDay());
+    const extractedMonth = extractMonth(task.deadline.getUTCMonth());
 
     const dueDate = `Due ${extractedDay}, ${extractedMonth} ${extractedDate}`;
 
@@ -47,7 +41,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, category, title, description,
             <View style={[styles.detailsOuterContainer, { borderLeftColor: category.color }]}>
                 <View style={styles.detailsInnerContainer}>
                     <View>
-                        <AppText passedStyle={styles.title} text={title} />
+                        <AppText passedStyle={styles.title} text={task.title} />
 
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                              <AppText passedStyle={styles.desc} text={dueDate} />
@@ -56,6 +50,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, category, title, description,
                         </View>
                     </View>
                     
+                    <UpdateTaskStatusModal />
                     <CardModDropdown task={task} />
                 </View>
 
@@ -72,7 +67,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, category, title, description,
                     }}>
                         <Circle cx="8" cy="8" r="8" fill={statusCol} />
                     </Svg>
-                    <AppText passedStyle={styles.status} text={status} />
+                    <AppText passedStyle={styles.status} text={task.status as string} />
                 </View>
             </View>
         </View>

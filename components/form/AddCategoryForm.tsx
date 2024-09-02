@@ -18,7 +18,7 @@ import generateUniqueId from '../../utility/generateUniqueId';
 const AddCategoryForm: React.FC = () => {
     const { toggleModal } = useModal<CategoryModal>(appModals['Category']);
 
-    const AddCategoryForm = createAppForm<Category>();
+    const AddCategoryAppForm = createAppForm<Category>();
     const AddCategoryButton = createFormSubmitButton<Category>();
 
     const toastSuccess = () => {
@@ -40,7 +40,7 @@ const AddCategoryForm: React.FC = () => {
 
 
     return (
-        <AddCategoryForm
+        <AddCategoryAppForm
             initialValues={{
                 uId: '',
                 title: '',
@@ -62,7 +62,7 @@ const AddCategoryForm: React.FC = () => {
             </View>
             
             <AddCategoryButton title='Add category' />
-        </AddCategoryForm>
+        </AddCategoryAppForm>
     );
 };
 

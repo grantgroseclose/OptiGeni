@@ -3,16 +3,19 @@ import { create } from 'zustand';
 
 export type CategoryModal = 'Category';
 export type CalendarModal = 'Calendar';
-export type Modals = CategoryModal | CalendarModal;
+export type UpdateTaskModal = 'UpdateTask';
+export type Modals = CategoryModal | CalendarModal | UpdateTaskModal;
 
 export type ModalMap = {
     Category: CategoryModal;
     Calendar: CalendarModal;
+    UpdateTask: UpdateTaskModal;
 };
 
 export const appModals: ModalMap = {
     Category: 'Category',
-    Calendar: 'Calendar'
+    Calendar: 'Calendar',
+    UpdateTask: 'UpdateTask'
 }
 
 interface ModalStore<T extends string> {

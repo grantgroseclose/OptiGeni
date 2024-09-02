@@ -3,7 +3,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { RootTabParamList } from '../navigation/AppNavigator';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-import colors, { material_colors } from '../config/colors';
+import colors from '../config/colors';
 import Screen from '../components/Screen';
 import AppText from '../components/AppText';
 import useCategories from '../hooks/useCategories';
@@ -12,9 +12,7 @@ import CategoryFilterCard from '../components/card/CategoryFilterCard';
 import TaskCard from '../components/card/TaskCard';
 import { Category } from '../types/data/Category';
 import { Task } from '../types/data/Task';
-import { useQueryClient } from '@tanstack/react-query';
-import { useAuthStore } from '../store/auth';
-
+import Toast from 'react-native-toast-message';
 
 
 
@@ -26,11 +24,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     const categoryQuery = useCategories();
     const taskQuery = useTasks();
 
-    const queryClient = useQueryClient();
-    const logoutUser = useAuthStore((state) => state.logout);
-    const logoutUserOnSubmit = () => {
-        queryClient.clear();
-        logoutUser();
+    const toastError = (err: string) => {
+        Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: err
+        });
     }
     
     if (categoryQuery.isPending || taskQuery.isPending) {
@@ -41,8 +40,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         );
     }
 
-    if (categoryQuery.isError || taskQuery.isError) {
-        return;
+    if (categoryQuery.isError) {
+        toastError(categoryQuery.error.message);
+    }
+
+    if (taskQuery.isError) {
+        toastError(taskQuery.error.message);
     }
 
     const getTaskCategory = (taskCatTitle: string): Category => {
@@ -55,21 +58,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         return {} as Category;
     }
 
-    const renderTaskCard = (index: number, task: Task) => {
-        const cat = getTaskCategory(task.categoryTitle);
+    const renderTaskCard = (idx: number, task: Task) => {
+        const category: Category = getTaskCategory(task.categoryTitle);
 
-        return <TaskCard
-            key={index}
-            task={task}
-            title={task.title}
-            category={cat}
-            description={task.description}
-            deadline={task.deadline}
-            priority={task.priority}
-            executionTime={task.executionTime}
-            status={task.status ? task.status : 'Not started'}
-            editable
-        />
+        return (
+            <TaskCard
+                key={idx}
+                task={task}
+                category={category}
+            />
+        );
     }
 
 
