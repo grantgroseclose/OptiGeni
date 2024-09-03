@@ -11,6 +11,7 @@ import {
     screenHeight, 
     screenWidth
 } from "../../config/dimensions";
+import { useCategoryStore } from "../../store/homeCategory";
 
 
 
@@ -27,11 +28,15 @@ const CategoryFilterCard: React.FC<CategoryFilterCardProps> = ({
     color,
     handlePress
 }) => {
+    const { categoryFilter } = useCategoryStore();
+    const fontColor = title === categoryFilter?.title ? material_colors.grey.lighten2 : material_colors.grey.darken3;
+
+
     return (
         <View style={[styles.cardContainer, { backgroundColor: color }]}>
             <TouchableOpacity style={[styles.card]} onPress={handlePress}>
                 <View style={styles.detailsContainer}>
-                    <AppText passedStyle={[styles.title, { color: color }]} text={title} />
+                    <AppText passedStyle={[styles.title, { color: fontColor }]} text={title} />
                 </View>
             </TouchableOpacity>
         </View>
@@ -48,9 +53,11 @@ const CategoryFilterCard: React.FC<CategoryFilterCardProps> = ({
 const styles = StyleSheet.create({
     cardContainer: {
         borderRadius: 15,
-        height: screenWidth * 0.285,
+        height: screenWidth * 0.265,
+        width: screenWidth * 0.265,
         marginHorizontal: screenWidth * .025,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     card: {
         backgroundColor: colors.dark,

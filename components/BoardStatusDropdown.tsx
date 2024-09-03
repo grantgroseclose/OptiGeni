@@ -74,8 +74,18 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 25,
         borderTopLeftRadius: 25,
         width: '100%',
-        padding: 15,
-        color: material_colors.grey.darken4
+        padding: 12,
+        color: material_colors.grey.darken4,
+        shadowOffset: {
+            width: 2,
+            height: 2
+        },
+        shadowColor: material_colors.shades.black,
+        shadowOpacity: 1,
+        shadowRadius: 5,
+        elevation: 5,
+        position: 'absolute',
+        top: '-12.5%'
     },
 	container: {
 		backgroundColor: colors.dark,

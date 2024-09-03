@@ -83,14 +83,14 @@ const BoardScreen: React.FC<BoardScreenProps> = ({navigation}) => {
     return (
         <Screen passedStyle={styles.container}>
             <View style={styles.board}>
-                <BoardStatusDropdown />
                 <View style={styles.boardInnerContainer}>
-                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal: '5%', paddingVertical: '1.25%'}}>
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal: '5%', paddingVertical: '2.5%'}}>
                         { Array.isArray(tasksFilteredByStatus) && tasksFilteredByStatus.map((task, index) => 
                             renderTaskCard(index, task)
                         )}
                     </ScrollView>
                 </View>
+                <BoardStatusDropdown />
             </View>
         </Screen>
     );
@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     board: {
-        height: '80%',
+        marginTop: '12.5%',
+        height: '75%',
         width: '85%',
         shadowOffset: {
             width: 2,
@@ -116,7 +117,6 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     boardInnerContainer: {
-        flex: 8,
         backgroundColor: material_colors.blue_grey.darken4,
         borderBottomRightRadius: 15,
         borderBottomLeftRadius: 15

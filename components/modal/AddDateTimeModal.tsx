@@ -10,6 +10,8 @@ import { CalendarModal, appModals } from "../../store/modal";
 import createAppModal from '../modal/AppModal';
 import { Calendar, DateData } from "react-native-calendars";
 import useModal from "../../hooks/useModal";
+import { screenWidth } from "../../config/dimensions";
+import { useDateStore } from "../../store/date";
 
 
 
@@ -17,6 +19,7 @@ const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
     ...otherProps
 }) => {
     const { isOpen, toggleModal } = useModal<CalendarModal>(appModals['Calendar']);
+    const { setDate } = useDateStore();
 
     const { setFieldValue } = useFormikContext();
     const [ field ] = useField(otherProps);
@@ -26,7 +29,7 @@ const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
     const handleSelect = async (day: DateData) => {
         const date = new Date(day.timestamp);
         await setFieldValue(field.name, date);
-        console.log(field.value);
+        setDate(date);
         toggleModal();
     }
         
@@ -34,7 +37,7 @@ const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
     return (
         <>
             { isOpen && 
-                <CalendarDropdownModal modal={appModals['Calendar']} >
+                <CalendarDropdownModal modal={appModals['Calendar']} passedStyles={styles} >
                     <Calendar 
                         onDayPress={handleSelect} 
                         hideExtraDays
@@ -66,6 +69,41 @@ const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
 
 
 const styles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    modalView: {
+        width: '95%',
+        height: 'auto',
+        backgroundColor: colors.modal,
+        borderRadius: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: screenWidth,
+        elevation: 5,
+    },
+    formContainer: {
+        padding: '2.5%',
+        height: 'auto'
+    },
+    closeIcon: {
+        alignSelf: 'flex-end'
+    },
+    textStyle: {
+        color: colors.white,
+        fontFamily: 'Inter-Bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    }
 });
 
 

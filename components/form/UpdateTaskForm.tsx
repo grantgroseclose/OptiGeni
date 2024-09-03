@@ -46,8 +46,6 @@ const UpdateTaskForm: React.FC = () => {
                 uId: task['uId'],
                 title: task['title'],
                 deadline: task['deadline'],
-                priority: task['priority'],
-                executionTime: task['executionTime'],
                 categoryId: task['categoryId'],
                 categoryTitle: task['categoryTitle'],
                 description: task['description'],

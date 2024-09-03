@@ -41,9 +41,7 @@ const AddTaskForm: React.FC = () => {
                 uId: '',
                 title: '',
                 description: '',
-                priority: 0,
                 deadline: new Date(),
-                executionTime: 0,
                 categoryTitle: '',
             }}
             validationSchema={toFormikValidationSchema(taskSchema)}
@@ -59,16 +57,6 @@ const AddTaskForm: React.FC = () => {
                 icon='note-edit'
             />
             <DateTimePicker />
-            <FormInputField
-                name='priority'
-                icon='alert-circle-check-outline'
-                keyboardType="numeric"
-            />
-            <FormInputField
-                name='executionTime'
-                icon='timer-sand'
-                keyboardType="numeric"
-            />
             <CategoryPicker />
             <AddTaskButton
                 title='Submit'
