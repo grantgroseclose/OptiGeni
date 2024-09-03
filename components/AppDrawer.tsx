@@ -41,13 +41,13 @@ const AppDrawer: React.FC<AppDrawerProps> = ({
                 return (
                     <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.dark, paddingVertical: '8.125%'}}>
                         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                            <AppIcon name='account-circle' size={100} backgroundColor='transparent' iconColor={material_colors.cyan.accent3} align='center' />
+                            <AppIcon name='account-circle' size={100} backgroundColor='transparent' iconColor={material_colors.purple.accent4} align='center' />
                             <AppText passedStyle={{fontFamily: 'Inter-Black'}} text={'__USER__'}/>
                         </View>
 
                         <View style={{flex: 3,  justifyContent: 'flex-end'}}>
                             <Pressable style={{flexDirection: 'row', alignItems: 'center'}} onPress={logoutUserOnSubmit}>
-                                <AppIcon name='logout-variant' size={60} backgroundColor='transparent' iconColor={material_colors.cyan.accent3} align='center' />
+                                <AppIcon name='logout-variant' size={60} backgroundColor='transparent' iconColor={material_colors.purple.accent4} align='center' />
                                 <AppText passedStyle={{fontFamily: 'Inter-Light'}} text={'Logout'}/>
                             </Pressable>
                         </View>
@@ -58,7 +58,7 @@ const AppDrawer: React.FC<AppDrawerProps> = ({
         >
                 <View style={{flexDirection: 'row', backgroundColor: colors.dark, justifyContent: 'space-between'}}>
                     <Pressable onPress={() => setOpen((prevOpen) => !prevOpen)} style={{backgroundColor: 'transparent', paddingTop: '8.125%'}}>
-                        <AppIcon name='menu' size={80} backgroundColor='transparent' iconColor={material_colors.cyan.accent3} align='flex-start' />
+                        <AppIcon name='menu' size={80} backgroundColor='transparent' iconColor={material_colors.purple.accent4} align='flex-start' />
                     </Pressable>
 
                     <Pressable onPress={() => console.log('search')} style={{backgroundColor: 'transparent', paddingTop: '8.125%'}}>

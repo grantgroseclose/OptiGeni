@@ -11,6 +11,7 @@ import useAddCategory from '../../hooks/mutations/useAddCategory';
 import { appModals, CategoryModal } from '../../store/modal';
 import useModal from '../../hooks/useModal';
 import generateUniqueId from '../../utility/generateUniqueId';
+import CategoryColorPicker from './dropdown/CategoryColorPicker';
 
 
 
@@ -55,10 +56,7 @@ const AddCategoryForm: React.FC = () => {
                     name='title'
                     icon='pencil'
                 />
-                <FormInputField
-                    name='color'
-                    icon='format-color-fill'
-                />
+                <CategoryColorPicker name='color'/>
             </View>
             
             <AddCategoryButton title='Add category' />

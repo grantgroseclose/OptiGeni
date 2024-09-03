@@ -9,35 +9,21 @@ import { useField, useFormikContext } from "formik";
 import FormInputFieldProps from "../../../types/form/FormInputFieldProps";
 
 import colors, { material_colors } from "../../../config/colors";
-import { appModals, CategoryModal } from "../../../store/modal";
-import useModal from "../../../hooks/useModal";
 import AppText from "../../AppText";
+import extractCategoryColorDropdownData, { CategoryColorDropdownData } from "../../../utility/extractCategoryColorDropdownData";
 
 
 
 
-export type CategoryDropdownData = {
-	label: string;
-	value: string; 
-	color: string;
-};
-
-type DropdownComponentProps = {
-    data: CategoryDropdownData[];
-} & FormInputFieldProps;
-
-
-
-
-const CategoryDropdown: React.FC<DropdownComponentProps> = ({
-	data,
+const CategoryColorPicker: React.FC<FormInputFieldProps> = ({
 	...otherProps
 }) => {
-	const { toggleModal } = useModal<CategoryModal>(appModals['Category']);
 	const { setFieldValue } = useFormikContext();
 	const [ field ] = useField(otherProps);
 
-	const handleSelect = (item: CategoryDropdownData) => (item.value === 'add-new') ? toggleModal() : setFieldValue(field.name, item.label);
+    const categoryColorDropdownData = extractCategoryColorDropdownData();
+
+	const handleSelect = (item: CategoryColorDropdownData) => setFieldValue(field.name, item.value);
 
 
 	return (
@@ -48,23 +34,23 @@ const CategoryDropdown: React.FC<DropdownComponentProps> = ({
 			inputSearchStyle={styles.inputSearchStyle}
 			containerStyle={styles.container}
 			iconStyle={styles.iconStyle}
-			data={data ? data : []}
+			data={categoryColorDropdownData}
 			search
 			maxHeight={300}
 			labelField="label"
 			valueField="value"
-			placeholder="Select category"
+			placeholder="Select color"
 			searchPlaceholder="Search..."
 			value={field.value}
 			onChange={handleSelect}
 			activeColor={material_colors.grey.darken4}
-			renderItem={(item: CategoryDropdownData) => (
+			renderItem={(item: CategoryColorDropdownData) => (
 				<View style={{borderLeftWidth: 3, borderRadius: 10, borderColor: item.color, height: 48, justifyContent: 'center'}}>
 					<AppText passedStyle={{paddingLeft: 8, fontFamily: 'Inter-Thin'}} text={item.label} />
 				</View>
 			)}
 			renderLeftIcon={() => (
-				<MaterialCommunityIcons style={styles.icon} color="gray" name="view-dashboard-edit-outline" size={20} />
+				<MaterialCommunityIcons style={styles.icon} color="gray" name="format-color-fill" size={20} />
 			)}
 		/>
 	);
@@ -127,4 +113,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default CategoryDropdown;
+export default CategoryColorPicker;

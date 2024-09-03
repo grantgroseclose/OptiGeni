@@ -38,6 +38,14 @@ const AppTextInput: React.FC<InputProps & TextInputProps> = ({icon, ...otherProp
 const styles = StyleSheet.create({
     container: {
         backgroundColor: material_colors.grey.darken4,
+        shadowOffset: {
+            width: 2,
+            height: 2
+        },
+        shadowColor: material_colors.shades.black,
+        shadowOpacity: 1,
+        shadowRadius: 5,
+        elevation: 5,
         borderRadius: 25,
         flexDirection: 'row',
         width: '100%',

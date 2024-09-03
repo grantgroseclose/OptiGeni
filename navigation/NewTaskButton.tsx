@@ -19,7 +19,7 @@ const NewTaskButton: React.FC<NewTaskButtonProps> = ({ onPress }) => {
 			<View style={styles.container}>
 				<MaterialCommunityIcons
 					name="plus-circle"
-					color={material_colors.cyan.accent3}
+					color={material_colors.purple.accent4}
 					size={screenWidth * .25}
 				/>
 			</View>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent',
 		shadowOpacity: 0.7,
 		shadowRadius: 10,
-		shadowColor: material_colors.cyan.accent3,
+		shadowColor: material_colors.purple.accent4,
 		bottom: 20,
 		height: screenWidth * .25,
 		justifyContent: "center",

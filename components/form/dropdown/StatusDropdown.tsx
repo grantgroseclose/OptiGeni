@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
 	container: {
 		backgroundColor: colors.dark,
 		borderWidth: 0,
-		borderRadius: 15,
+		borderBottomRightRadius: 15,
+		borderBottomLeftRadius: 15,
 		shadowColor: material_colors.shades.black,
 		shadowOpacity: 1,
 		shadowRadius: 5,

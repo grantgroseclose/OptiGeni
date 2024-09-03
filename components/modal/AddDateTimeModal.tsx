@@ -35,7 +35,9 @@ const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
         <>
             { isOpen && 
                 <CalendarDropdownModal modal={appModals['Calendar']} >
-                    <Calendar onDayPress={handleSelect} 
+                    <Calendar 
+                        onDayPress={handleSelect} 
+                        hideExtraDays
                         theme={{
                             monthTextColor: material_colors.grey.lighten3,
                             backgroundColor: 'transparent',
@@ -46,7 +48,6 @@ const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
                             todayTextColor: material_colors.cyan.accent3,
                             arrowColor: material_colors.cyan.accent3,
                             dayTextColor: '#2d4150',
-                            textDisabledColor: 'transparent',
 
                             textDayFontFamily: 'Inter-Regular',
                             textMonthFontFamily: 'Inter-Regular',

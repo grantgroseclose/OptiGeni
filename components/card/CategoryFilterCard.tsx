@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { 
     View, 
     StyleSheet, 
@@ -18,16 +18,18 @@ import {
 type CategoryFilterCardProps = {
     title: string;
     color: string;
+    handlePress: () => void;
 };
 
 
 const CategoryFilterCard: React.FC<CategoryFilterCardProps> = ({
     title,
-    color
+    color,
+    handlePress
 }) => {
     return (
         <View style={[styles.cardContainer, { backgroundColor: color }]}>
-            <TouchableOpacity style={[styles.card]}>
+            <TouchableOpacity style={[styles.card]} onPress={handlePress}>
                 <View style={styles.detailsContainer}>
                     <AppText passedStyle={[styles.title, { color: color }]} text={title} />
                 </View>
@@ -35,6 +37,10 @@ const CategoryFilterCard: React.FC<CategoryFilterCardProps> = ({
         </View>
     );
 };
+
+
+
+
 
 
 

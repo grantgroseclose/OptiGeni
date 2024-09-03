@@ -128,7 +128,7 @@ export type TMaterialColors = {
         accent4: '#00B8D4'
     },
     teal: {
-        red: '#009688',
+        teal: '#009688',
         lighten5: '#E0F2F1',
         lighten4: '#B2DFDB',
         lighten3: '#80CBC4',

@@ -6,6 +6,7 @@ import { screenWidth } from '../../config/dimensions';
 import { Modals } from '../../store/modal';
 
 import useModal from '../../hooks/useModal';
+import { MaterialColor } from '../../types/config/colors';
 
 
 
@@ -14,6 +15,15 @@ import useModal from '../../hooks/useModal';
 export type AppModalProps<TModal extends Modals> = {
 	modal: TModal;
 	children: React.ReactNode;
+	passedStyles?: {
+		centeredView?: object;
+		modalView?: object;
+		formContainer?: object;
+		closeIcon?: object;
+		textStyle?: object;
+		modalText?: object;
+		iconColor?: MaterialColor;
+	}
 };
 
 
@@ -21,6 +31,7 @@ export type AppModalProps<TModal extends Modals> = {
 
 const AppModalElement = <TModal extends Modals>({
 	modal,
+	passedStyles,
 	children
 }: AppModalProps<TModal>) => {
 	const { isOpen, toggleModal } = useModal<TModal>(modal);
@@ -31,15 +42,15 @@ const AppModalElement = <TModal extends Modals>({
 			transparent
 			visible={isOpen}
 		>
-			<View style={styles.centeredView}>            
-				<View style={styles.modalView}>
+			<View style={[styles.centeredView, passedStyles?.centeredView ? passedStyles.centeredView : {}]}>            
+				<View style={[styles.modalView, passedStyles?.modalView ? passedStyles.modalView : {}]}>
 					<View>
-						<TouchableOpacity onPress={toggleModal} style={styles.closeIcon}>
-							<AppIcon name='window-close' iconColor={material_colors.grey.darken1} size={70} backgroundColor={'transparent'} align='flex-end' />
+						<TouchableOpacity onPress={toggleModal} style={[styles.closeIcon, passedStyles?.closeIcon ? passedStyles.closeIcon : {}]}>
+							<AppIcon name='window-close' iconColor={passedStyles?.iconColor ? passedStyles.iconColor : material_colors.grey.darken1} size={70} backgroundColor={'transparent'} align='flex-end' />
 						</TouchableOpacity>
 					</View>
 
-					<View style={styles.formContainer}>
+					<View style={[styles.formContainer, passedStyles?.formContainer ? passedStyles.formContainer : {}]}>
 						{ children }
 					</View>
 				</View>

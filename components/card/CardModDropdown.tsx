@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     container: {
         width: '37.5%',
         left: '56.25%',
-        backgroundColor: material_colors.purple.accent3,
+        backgroundColor: material_colors.red.accent4,
         borderWidth: 0,
         borderRadius: 15,
         shadowColor: material_colors.shades.black,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     itemContainer: {
-        // backgroundColor: material_colors.deep_orange.accent4
+        // backgroundColor: 'transparent'
     },
     text: {
         color: material_colors.grey.lighten2

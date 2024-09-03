@@ -32,7 +32,7 @@ const UpdateTaskForm: React.FC = () => {
     const updateTask = useUpdateTask(toastSuccess);
 
     const UpdateTaskAppForm = createAppForm<Task>();
-    const AddTaskButton = createFormSubmitButton<Task>();
+    const UpdateTaskButton = createFormSubmitButton<Task>();
 
     const updateTaskOnSubmit = (data: Task) => { 
         updateTask.mutate(data);
@@ -58,8 +58,8 @@ const UpdateTaskForm: React.FC = () => {
             onSubmit={updateTaskOnSubmit}
         >
             <StatusDropdown name='status' />
-            <AddTaskButton
-                title='Submit'
+            <UpdateTaskButton
+                title='Update'
             />
         </UpdateTaskAppForm>
     );

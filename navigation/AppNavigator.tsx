@@ -6,7 +6,7 @@ import colors, { material_colors } from "../config/colors";
 import routes from "./routes";
 
 import HomeScreen from "../screens/HomeScreen";
-import CalendarScreen from "../screens/CalendarScreen";
+import BoardScreen from "../screens/BoardScreen";
 import AddTaskScreen from "../screens/AddTaskScreen";
 
 import NewTaskButton from "./NewTaskButton";
@@ -18,7 +18,7 @@ import { screenHeight } from "../config/dimensions";
 export type RootTabParamList = {
 	Home: undefined;
 	AddTask: undefined;
-	Calendar: undefined;
+	Board: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -41,13 +41,13 @@ const AppNavigator: React.FC<AppNavigatorProps> = () => (
 			shadowRadius: 10,
 			shadowOpacity: 1
         },
-        tabBarActiveTintColor: material_colors.cyan.accent3
+        tabBarActiveTintColor: material_colors.purple.accent4
     }}>
 		<Tab.Screen
 			name='Home'
 			component={HomeScreen}
 			options={{
-				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='home-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 } />
+				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='home-outline' size={size} color={focused ? material_colors.purple.accent4 : material_colors.grey.darken1 } />
 			}}
 		/>
 		<Tab.Screen
@@ -69,10 +69,10 @@ const AppNavigator: React.FC<AppNavigatorProps> = () => (
 			})}
 		/>
 		<Tab.Screen
-			name='Calendar'
-			component={CalendarScreen}
+			name='Board'
+			component={BoardScreen}
 			options={{
-				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='calendar-month-outline' size={size} color={focused ? material_colors.cyan.accent3 : material_colors.grey.darken1 }/>
+				tabBarIcon: ({ size, focused }) => <MaterialCommunityIcons name='table' size={size} color={focused ? material_colors.purple.accent4 : material_colors.grey.darken1 }/>
 			}}
 		/>
     </Tab.Navigator>
