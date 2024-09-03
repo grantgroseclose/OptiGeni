@@ -28,7 +28,7 @@ const CategoryFilterCard: React.FC<CategoryFilterCardProps> = ({
     color,
     handlePress
 }) => {
-    const { categoryFilter } = useCategoryStore();
+    const categoryFilter = useCategoryStore((state) => state.categoryFilter);
     const fontColor = title === categoryFilter?.title ? material_colors.grey.lighten2 : material_colors.grey.darken3;
 
 

@@ -25,6 +25,8 @@ const AppDrawer: React.FC<AppDrawerProps> = ({
     const [open, setOpen] = React.useState(false);
 
     const queryClient = useQueryClient();
+    const firstname = useAuthStore((state) => state.firstname);
+    const firstNameCapitalized = firstname.charAt(0).toUpperCase() + firstname.slice(1);
     const logoutUser = useAuthStore((state) => state.logout);
 
     const logoutUserOnSubmit = () => {
@@ -42,7 +44,7 @@ const AppDrawer: React.FC<AppDrawerProps> = ({
                     <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.dark, paddingVertical: '8.125%'}}>
                         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                             <AppIcon name='account-circle' size={100} backgroundColor='transparent' iconColor={material_colors.purple.accent4} align='center' />
-                            <AppText passedStyle={{fontFamily: 'Inter-Black'}} text={'__USER__'}/>
+                            <AppText passedStyle={{fontFamily: 'Inter-Black'}} text={firstNameCapitalized}/>
                         </View>
 
                         <View style={{flex: 3,  justifyContent: 'flex-end'}}>
@@ -61,8 +63,8 @@ const AppDrawer: React.FC<AppDrawerProps> = ({
                         <AppIcon name='menu' size={80} backgroundColor='transparent' iconColor={material_colors.purple.accent4} align='flex-start' />
                     </Pressable>
 
-                    <Pressable onPress={() => console.log('search')} style={{backgroundColor: 'transparent', paddingTop: '8.125%'}}>
-                        <AppIcon name='magnify' size={80} backgroundColor='transparent' iconColor={material_colors.grey.darken2} align='flex-end' />
+                    <Pressable onPress={() => console.log('search')} style={{backgroundColor: 'transparent', paddingTop: '8.125%', alignSelf: 'flex-end'}}>
+                        <AppIcon name='magnify' size={75} backgroundColor='transparent' iconColor={material_colors.grey.darken2} align='flex-end' />
                     </Pressable>
                 </View>
                 

@@ -12,7 +12,7 @@ import extractMonth from "../../utility/extractMonth";
 
 const DateTimePicker: React.FC = () => {
     const { toggleModal } = useModal<CalendarModal>(appModals['Calendar']);
-    const { date } = useDateStore();
+    const date = useDateStore((state) => state.date);
     
     const extractedDate = date.getUTCDate().toString();
     const extractedDay = extractDay(date.getUTCDay());

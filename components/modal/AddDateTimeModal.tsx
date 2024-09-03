@@ -15,11 +15,12 @@ import { useDateStore } from "../../store/date";
 
 
 
+
 const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
     ...otherProps
 }) => {
     const { isOpen, toggleModal } = useModal<CalendarModal>(appModals['Calendar']);
-    const { setDate } = useDateStore();
+    const setDate = useDateStore((state) => state.setDate);
 
     const { setFieldValue } = useFormikContext();
     const [ field ] = useField(otherProps);

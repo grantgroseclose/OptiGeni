@@ -17,7 +17,6 @@ export const useBoardStore = create<BoardStore>(
         setStatus: (status: Status) => 
             set((state) => ({
                 status: status
-            })) 
-        ,
+            }))
     })
 );

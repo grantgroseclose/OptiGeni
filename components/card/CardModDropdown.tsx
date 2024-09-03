@@ -34,7 +34,7 @@ const CardModDropdown: React.FC<CardModDropdownProps> = ({
     task
 }) => {
     const { toggleModal } = useModal<UpdateTaskModal>(appModals['UpdateTask']);
-    const { setTask } = useTaskStore();
+    const setTask = useTaskStore((state) => state.setTask);
 
     const toastSuccess = () => {
         Toast.show({

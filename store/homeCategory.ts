@@ -17,7 +17,6 @@ export const useCategoryStore = create<CategoryStore>(
         setCategory: (cat: Category | null) => 
             set((state) => ({
                 categoryFilter: cat
-            })) 
-        ,
+            }))
     })
 );

@@ -26,7 +26,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     const categoryQuery = useCategories();
     const taskQuery = useTasks();
 
-    const { categoryFilter, setCategory } = useCategoryStore();
+    const categoryFilter = useCategoryStore((state) => state.categoryFilter);
+    const setCategory = useCategoryStore((state) => state.setCategory);
 
     const toastError = (err: string) => {
         Toast.show({

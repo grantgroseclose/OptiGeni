@@ -16,7 +16,8 @@ import { useBoardStore } from "../store/statusBoard";
 
 
 const BoardStatusDropdown: React.FC = () => {
-    const { status, setStatus } = useBoardStore();
+    const status = useBoardStore((state) => state.status);
+    const setStatus = useBoardStore((state) => state.setStatus);
 
     const dropdownData: StatusDropdownData[] = [
         {

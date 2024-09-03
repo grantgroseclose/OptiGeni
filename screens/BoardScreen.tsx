@@ -22,7 +22,7 @@ type BoardScreenProps = BottomTabScreenProps<RootTabParamList, 'Board'>;
 
 
 const BoardScreen: React.FC<BoardScreenProps> = ({navigation}) => {
-    const { status } = useBoardStore();
+    const status = useBoardStore((state) => state.status);
 
     const categoryQuery = useCategories();
     const taskQuery = useTasks();

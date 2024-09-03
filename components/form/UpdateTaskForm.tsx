@@ -25,8 +25,7 @@ const toastSuccess = () => {
 
 
 const UpdateTaskForm: React.FC = () => {
-    const { getTask } = useTaskStore();
-    const task = getTask();
+    const task = useTaskStore((state) => state.task);
 
     const { toggleModal } = useModal<UpdateTaskModal>(appModals['UpdateTask']);
     const updateTask = useUpdateTask(toastSuccess);

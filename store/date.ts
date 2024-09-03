@@ -16,7 +16,6 @@ export const useDateStore = create<DateStore>(
         setDate: (date: Date) => 
             set((state) => ({
                 date: date
-            })) 
-        ,
+            }))
     })
 );
