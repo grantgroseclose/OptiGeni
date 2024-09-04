@@ -8,9 +8,9 @@ const newUserSchema = z.object({
     firstname: z.string().min(1, 'First name must have at least 1 character')
 });
   
-type TNewUserSchema = typeof newUserSchema;
-type        NewUser = z.infer<TNewUserSchema>;
+type NewUserSchema = typeof newUserSchema;
+type        NewUser = z.infer<NewUserSchema>;
 
 
 
-export { newUserSchema, TNewUserSchema, NewUser };
+export { newUserSchema, NewUserSchema, NewUser };

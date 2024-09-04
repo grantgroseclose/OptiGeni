@@ -15,7 +15,7 @@ const taskSchema = z.object({
 });
 
 
-type TTaskSchema = typeof taskSchema;
-type        Task = z.infer<TTaskSchema>;
+type TaskSchema = typeof taskSchema;
+type        Task = z.infer<TaskSchema>;
 
-export { taskSchema, TTaskSchema, Task };
+export { taskSchema, TaskSchema, Task };

@@ -7,9 +7,9 @@ const existingUserSchema = z.object({
     password: z.string().min(5, 'Password must have at least 5 characters')
 });
   
-type TExistingUserSchema = typeof existingUserSchema;
-type        ExistingUser = z.infer<TExistingUserSchema>;
+type ExistingUserSchema = typeof existingUserSchema;
+type        ExistingUser = z.infer<ExistingUserSchema>;
 
 
 
-export { existingUserSchema, TExistingUserSchema, ExistingUser };
+export { existingUserSchema, ExistingUserSchema, ExistingUser };

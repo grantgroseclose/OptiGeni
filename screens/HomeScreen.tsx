@@ -15,6 +15,7 @@ import { Task } from '../types/data/Task';
 import Toast from 'react-native-toast-message';
 import { useCategoryStore } from '../store/homeCategory';
 import AppButton from '../components/AppButton';
+import { useErrorStore } from '../store/error';
 
 
 
@@ -25,6 +26,7 @@ type HomeScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     const categoryQuery = useCategories();
     const taskQuery = useTasks();
+    const error = useErrorStore(state => state.error);
 
     const categoryFilter = useCategoryStore((state) => state.categoryFilter);
     const setCategory = useCategoryStore((state) => state.setCategory);
@@ -46,7 +48,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     }
 
     if (categoryQuery.isError) {
-        toastError(categoryQuery.error.message);
+        if (error) { 
+            toastError(error);
+        }
         return (
             <Screen passedStyle={{}}>
                 <View></View>
@@ -55,7 +59,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     }
 
     if (taskQuery.isError) {
-        toastError(taskQuery.error.message);
+        if (error) { 
+            toastError(error);
+        }
         return (
             <Screen passedStyle={{}}>
                 <View></View>

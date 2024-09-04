@@ -11,8 +11,8 @@ const categorySchema = z.object({
 
 
 
-type TCategorySchema = typeof categorySchema;
-type        Category = z.infer<TCategorySchema>;
+type CategorySchema = typeof categorySchema;
+type        Category = z.infer<CategorySchema>;
 
 
-export { categorySchema, TCategorySchema, Category };
+export { categorySchema, CategorySchema, Category };

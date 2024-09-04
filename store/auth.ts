@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { LoginClientData, useLoginService } from "../services/AuthService";
+import { AuthServiceLoginData, useLoginService } from "../services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ExistingUser } from "../types/data/ExistingUser";
 import { z } from "zod";
+import { ApiErrorResponse } from "../types/api/APIClient";
 
 
 
@@ -14,7 +15,7 @@ interface AuthStore {
     firstname: string;
     isAuth: boolean;
     error: string;
-    login: (data: ExistingUser) => Promise<z.infer<LoginClientData['response']> | void>;
+    login: (data: ExistingUser) => Promise<z.infer<ApiErrorResponse> | void>;
     logout: () => void;
 }
 
@@ -38,7 +39,7 @@ export const useAuthStore = create(
                         error: res.error
                     }));
 
-                    return res as z.infer<LoginClientData['response']>;
+                    return res as z.infer<ApiErrorResponse>;
                 } else {
                     set((state) => ({ 
                         token: res.token,
