@@ -45,6 +45,8 @@ const useUpdateMutation = <T extends { uId?: string }>(
             queryClient.setQueryData<T[]>(cacheKey, (data = []) =>
                 data.map((item) => (item.uId === updatedItem.uId ? updatedItem : item))
             );
+
+			queryClient.invalidateQueries({ queryKey: cacheKey });
 		},
 
 		onError: (error, newItem, context) => {

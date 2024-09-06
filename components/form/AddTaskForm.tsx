@@ -41,7 +41,7 @@ const AddTaskForm: React.FC = () => {
                 uId: '',
                 title: '',
                 description: '',
-                deadline: new Date(),
+                deadline: new Date().toISOString(),
                 categoryTitle: '',
             }}
             validationSchema={toFormikValidationSchema(taskSchema)}

@@ -38,6 +38,8 @@ const useAddMutation = <T extends { uId?: string }>(
 			queryClient.setQueryData<T[]>(cacheKey, (data) => 
 				data?.map((item) => item.uId === newItem.uId ? savedItem : item
 			));
+
+			queryClient.invalidateQueries({ queryKey: cacheKey });
 		},
 
 		onError: (error, newItem, context) => {

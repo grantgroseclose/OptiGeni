@@ -29,7 +29,8 @@ const AddDateTimeModal: React.FC<FormInputFieldProps> = ({
 
     const handleSelect = async (day: DateData) => {
         const date = new Date(day.timestamp);
-        await setFieldValue(field.name, date);
+        const dateString = date.toISOString();
+        await setFieldValue(field.name, dateString);
         setDate(date);
         toggleModal();
     }

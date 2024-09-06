@@ -28,12 +28,13 @@ export type TaskCardProps = {
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, category }) => {
     const statusCol = statusColorMap[task.status as Status];
+    
+    const extractedISODate = new Date(task.deadline);
+    const extractedDate = extractedISODate.getUTCDate().toString();
+    const extractedDay = extractDay(extractedISODate.getUTCDay());
+    const extractedMonth = extractMonth(extractedISODate.getUTCMonth());
 
-    const extractedDate = task.deadline.getUTCDate().toString();
-    const extractedDay = extractDay(task.deadline.getUTCDay());
-    const extractedMonth = extractMonth(task.deadline.getUTCMonth());
-
-    const dueDate = `Due ${extractedDay}, ${extractedMonth} ${extractedDate}`;
+    const dueDate = `${extractedDay}, ${extractedMonth} ${extractedDate}`;
 
     
     return (
@@ -44,7 +45,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, category }) => {
                         <AppText passedStyle={styles.title} text={task.title} />
 
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                             <AppText passedStyle={styles.desc} text={dueDate} />
+                             <AppText passedStyle={styles.desc} text={`${dueDate}`} />
 
                             <AppIcon name='calendar-month' size={50} align='flex-end' backgroundColor="transparent" iconColor={material_colors.grey.grey} />
                         </View>
