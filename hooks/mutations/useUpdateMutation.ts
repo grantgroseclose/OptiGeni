@@ -1,29 +1,35 @@
 import { useMutation, useQueryClient, UseMutationResult, QueryKey } from "@tanstack/react-query";
 
-import { Task } from "../../types/data/Task";
-
-type UpdatedTask = Pick<Task, 'uId' | 'status'>;
-
-
-
-
-interface AddContext<T> { 
-	previousData: T[]
+/**
+ * Interface defining the context for updating an item.
+ * @template T - The type of item being updated.
+ */
+interface UpdateContext<T> { 
+    previousData: T[]
 }
 
-
-
+/**
+ * Custom hook for performing an update operation with optimistic updates.
+ * This hook abstracts the common logic needed to update an item on the server and
+ * update the client state optimistically.
+ * 
+ * @template T - The type of the item with an optional `uId` identifier.
+ * @param {Function} mutationFn - A function that performs the mutation operation.
+ * @param {QueryKey} cacheKey - The cache key used to store the items in the query cache.
+ * @param {Function} onUpdate - A callback function to execute additional side effects upon updating an item.
+ * @returns {UseMutationResult<T, Error, T, UpdateContext<T>>} A mutation result object that provides methods to track and control the mutation status.
+ */
 const useUpdateMutation = <T extends { uId?: string }>(
 	mutationFn: (item: T) => Promise<T>,
 	cacheKey: QueryKey,
-	onAdd: () => void
-): UseMutationResult<T, Error, T, AddContext<T>> => {
+	onUpdate: () => void
+): UseMutationResult<T, Error, T, UpdateContext<T>> => {
 	const queryClient = useQueryClient();
 
-	return useMutation<T, Error, T, AddContext<T>>({
+	return useMutation<T, Error, T, UpdateContext<T>>({
 		mutationFn,
 
-		onMutate: async (newItem: T): Promise<AddContext<T>> => {
+		onMutate: async (newItem: T): Promise<UpdateContext<T>> => {
 			await queryClient.cancelQueries({queryKey: cacheKey});
 
 			const previousData = queryClient.getQueryData<T[]>(cacheKey) || [];
@@ -36,7 +42,7 @@ const useUpdateMutation = <T extends { uId?: string }>(
                 queryClient.setQueryData<T[]>(cacheKey, updatedData);
             }
 
-			onAdd();
+			onUpdate();
 
 			return { previousData };
 		},

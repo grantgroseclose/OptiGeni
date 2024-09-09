@@ -7,7 +7,7 @@ import { useErrorStore } from "../../store/error";
 
 
 
-const useUpdateTask = (onAdd: () => void) => {
+const useUpdateTask = (onUpdate: () => void) => {
 	const TaskService = useTaskService(TASK_ENDPOINTS['TASK']);
 	const setError = useErrorStore(state => state.setError);
     const clearError = useErrorStore(state => state.clearError);
@@ -25,7 +25,7 @@ const useUpdateTask = (onAdd: () => void) => {
 		return res as Task;
 	}
 
-	return useUpdateMutation<Task>(mutationFn, CACHE_KEY_TASKS, onAdd);
+	return useUpdateMutation<Task>(mutationFn, CACHE_KEY_TASKS, onUpdate);
 }
 
 
